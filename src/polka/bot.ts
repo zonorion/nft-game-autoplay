@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import Web3 from 'web3'
 import { AbiItem } from 'web3-utils'
 import moment, { Moment } from 'moment'
-import { Cron } from '@nestjs/schedule'
+import { Cron, CronExpression } from '@nestjs/schedule'
 import { ethers } from 'ethers'
 import { CONTRACT_ABI } from './monster.abi'
 import { NFT_ABI } from './nft.abi'
@@ -59,6 +59,7 @@ export class Bot implements OnModuleInit {
         this.queueBattles = await this.initQueue()
 
         await this.handleBattle()
+        await this.currentReward()
     }
 
     @Cron('*/1 * * * *')
@@ -92,10 +93,6 @@ export class Bot implements OnModuleInit {
 
                                 await this.sleep(10000)
                             }
-                        } else {
-                            console.log(chalk.green(`Pet ${pet.id} already battle not yet`))
-                            const duration = moment.duration(pet.battleTime.diff(moment()))
-                            console.log(chalk.green(`Time remaining to battle ${duration.hours()}h:${duration.minutes()}m\n`))
                         }
                     }
                     if (this.isNeedRefreshQueue) {
@@ -103,8 +100,6 @@ export class Bot implements OnModuleInit {
                         this.isNeedRefreshQueue = false
                     }
                     this.isAutoRunning = false
-                    const currentReward = await this.battleContract.methods.getCurrentRewards(this.account.address).call()
-                    console.log(chalk.green(`Current reward available = ${currentReward * 1e-18} \n`))
                 }
             } else {
                 console.log(chalk.red(`======Can not find any pet======`))
@@ -115,6 +110,16 @@ export class Bot implements OnModuleInit {
                 await this.reInitWeb3()
                 await this.handleBattle()
             }
+        }
+    }
+
+    @Cron(CronExpression.EVERY_30_MINUTES)
+    async currentReward() {
+        try {
+            const currentReward = await this.battleContract.methods.getCurrentRewards(this.account.address).call()
+            console.log(chalk.green(`Current reward available = ${currentReward * 1e-18} \n`))
+        } catch (e) {
+            console.log(e)
         }
     }
 
@@ -144,6 +149,10 @@ export class Bot implements OnModuleInit {
                     timeBattles: timeBattle * 1,
                     battleTime: moment(exactTimeBattle),
                 } as Battle
+
+                console.log(chalk.green(`Pet ${battle.id} already battle not yet`))
+                const duration = moment.duration(battleTime.battleTime.diff(moment()))
+                console.log(chalk.green(`Time remaining to battle ${duration.hours()}h:${duration.minutes()}m\n`))
 
                 map.set(pet.id, battle)
             }
