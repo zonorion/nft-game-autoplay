@@ -11,7 +11,6 @@ import { BATTLE_ABI } from './battle.abi'
 import { MANAGER_ABI } from './manager.abi'
 
 const { log } = console
-const Utils = Web3.utils
 
 class Pet {
     id: number
@@ -31,13 +30,13 @@ const configs = {
 
 @Injectable()
 export class Bot implements OnModuleInit {
-    // private readonly web3 = new Web3(process.env.RPC_NODE)
-    private readonly web3 = new Web3(process.env.WSS_NODE)
-    private readonly account = this.web3.eth.accounts.privateKeyToAccount(process.env.WALLET_PRIVATE_KEY)
-    private readonly monsterContract = new this.web3.eth.Contract(CONTRACT_ABI as AbiItem[], process.env.TOKEN_CONTRACT)
-    private readonly nftContract = new this.web3.eth.Contract(NFT_ABI as AbiItem[], process.env.NFT_CONTRACT)
-    private readonly battleContract = new this.web3.eth.Contract(BATTLE_ABI as AbiItem[], process.env.BATTLE_CONTRACT)
-    private readonly managerContract = new this.web3.eth.Contract(MANAGER_ABI as AbiItem[], process.env.MANAGER_CONTRACT)
+    private web3 = new Web3(process.env.RPC_NODE)
+    // private web3 = new Web3(process.env.WSS_NODE)
+    private account = this.web3.eth.accounts.privateKeyToAccount(process.env.WALLET_PRIVATE_KEY)
+    private monsterContract = new this.web3.eth.Contract(CONTRACT_ABI as AbiItem[], process.env.TOKEN_CONTRACT)
+    private nftContract = new this.web3.eth.Contract(NFT_ABI as AbiItem[], process.env.NFT_CONTRACT)
+    private battleContract = new this.web3.eth.Contract(BATTLE_ABI as AbiItem[], process.env.BATTLE_CONTRACT)
+    private managerContract = new this.web3.eth.Contract(MANAGER_ABI as AbiItem[], process.env.MANAGER_CONTRACT)
     private isAutoRunning = false
     private isNeedRefreshQueue = false
     private allPets: Pet[] = []
@@ -62,7 +61,7 @@ export class Bot implements OnModuleInit {
         await this.handleBattle()
     }
 
-    @Cron('*/5 * * * *')
+    @Cron('*/1 * * * *')
     async handleBattle() {
         try {
             if (this.allPets.length > 0) {
@@ -112,8 +111,21 @@ export class Bot implements OnModuleInit {
             }
         } catch (e) {
             console.log('=====ERROR=====', e.message)
-            throw e
+            if (e.message.includes('')) {
+                await this.reInitWeb3()
+                await this.handleBattle()
+            }
         }
+    }
+
+    async reInitWeb3() {
+        // this.web3 = new Web3(process.env.WSS_NODE)
+        this.web3 = new Web3(process.env.RPC_NODE)
+        this.account = this.web3.eth.accounts.privateKeyToAccount(process.env.WALLET_PRIVATE_KEY)
+        this.monsterContract = new this.web3.eth.Contract(CONTRACT_ABI as AbiItem[], process.env.TOKEN_CONTRACT)
+        this.nftContract = new this.web3.eth.Contract(NFT_ABI as AbiItem[], process.env.NFT_CONTRACT)
+        this.battleContract = new this.web3.eth.Contract(BATTLE_ABI as AbiItem[], process.env.BATTLE_CONTRACT)
+        this.managerContract = new this.web3.eth.Contract(MANAGER_ABI as AbiItem[], process.env.MANAGER_CONTRACT)
     }
 
     async initQueue(): Promise<Map<number, Battle>> {
