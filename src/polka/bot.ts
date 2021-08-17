@@ -9,6 +9,7 @@ import { CONTRACT_ABI } from './monster.abi'
 import { NFT_ABI } from './nft.abi'
 import { BATTLE_ABI } from './battle.abi'
 import { MANAGER_ABI } from './manager.abi'
+import { DECODELOG_ABI } from './decode-log.abi'
 
 const { log } = console
 
@@ -87,11 +88,20 @@ export class Bot implements OnModuleInit {
                                 }
                                 const signedTrans = await this.account.signTransaction(trans)
                                 const receipt = await this.web3.eth.sendSignedTransaction(signedTrans.rawTransaction)
+                                const result: any = this.web3.eth.abi.decodeLog(
+                                    DECODELOG_ABI,
+                                    receipt.logs[1].data,
+                                    [receipt.logs[1].topics[0]],
+                                )
 
-                                console.log(chalk.yellow(`Transaction receipt : https://www.bscscan.com/tx/${receipt.transactionHash}`))
+                                if (result.result * 1) {
+                                    console.log(chalk.green(`You won the battle, get ${result.reward * 1e-18} reward`))
+                                } else {
+                                    console.log(chalk.red(`You fucking lost the battle`))
+                                }
                                 console.log(chalk.green(`===============================================================================\n`))
 
-                                await this.sleep(10000)
+                                await this.sleep(15000)
                             }
                         }
                     }
@@ -106,10 +116,8 @@ export class Bot implements OnModuleInit {
             }
         } catch (e) {
             console.log('=====ERROR=====', e.message)
-            if (e.message.includes('')) {
-                await this.reInitWeb3()
-                await this.handleBattle()
-            }
+            await this.sleep(10000)
+            await this.handleBattle()
         }
     }
 
@@ -118,6 +126,19 @@ export class Bot implements OnModuleInit {
         try {
             const currentReward = await this.battleContract.methods.getCurrentRewards(this.account.address).call()
             console.log(chalk.green(`Current reward available = ${currentReward * 1e-18} \n`))
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    @Cron(CronExpression.EVERY_10_MINUTES)
+    async checkBattleTime() {
+        try {
+            for (const [key, pet] of this.queueBattles.entries()) {
+                console.log(chalk.green(`Pet ${pet.id} already battle not yet`))
+                const duration = moment.duration(pet.battleTime.diff(moment()))
+                console.log(chalk.green(`Time remaining to battle ${duration.hours()}h:${duration.minutes()}m\n`))
+            }
         } catch (e) {
             console.log(e)
         }
