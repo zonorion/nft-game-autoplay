@@ -4,6 +4,7 @@ import Web3 from 'web3'
 import { AbiItem } from 'web3-utils'
 import moment, { Moment } from 'moment'
 import { Cron, CronExpression } from '@nestjs/schedule'
+import { ethers } from 'ethers'
 import { CONTRACT_ABI } from './monster.abi'
 import { NFT_ABI } from './nft.abi'
 import { BATTLE_ABI } from './battle.abi'
@@ -29,7 +30,7 @@ const configs = {
 }
 
 @Injectable()
-export class Bot implements OnModuleInit {
+export class DsrBot implements OnModuleInit {
     private web3 = new Web3(process.env.RPC_NODE)
     // private web3 = new Web3(process.env.WSS_NODE)
     private account = this.web3.eth.accounts.privateKeyToAccount(process.env.WALLET_PRIVATE_KEY)
@@ -40,7 +41,6 @@ export class Bot implements OnModuleInit {
     private isAutoRunning = false
     private isNeedRefreshQueue = false
     private allPets: Pet[] = []
-    private canBattle = true
 
     // private readonly provider = new ethers.providers.WebSocketProvider(process.env.WSS_NODE)
     // private readonly wallet = new ethers.Wallet(process.env.WALLET_PRIVATE_KEY)
@@ -56,68 +56,54 @@ export class Bot implements OnModuleInit {
 
     async onModuleInit(): Promise<any> {
         log(chalk.bgRedBright(chalk.yellow('===Auto battle polka monster start===')))
-        this.allPets = await this.fetchAllPets()
-        this.queueBattles = await this.initQueue()
-
-        await this.checkBattlefields()
-        await this.handleBattle()
-        await this.currentReward()
+        // this.allPets = await this.fetchAllPets()
+        // this.queueBattles = await this.initQueue()
+        //
+        // await this.handleBattle()
+        // await this.currentReward()
     }
 
-    @Cron(CronExpression.EVERY_10_MINUTES)
-    async checkBattlefields() {
-        try {
-            this.canBattle = await this.managerContract.methods.battlefields(this.account.address).call()
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    @Cron('*/1 * * * *')
+    // @Cron('*/1 * * * *')
     async handleBattle() {
         try {
             if (this.allPets.length > 0) {
                 if (!this.isAutoRunning) {
                     this.isAutoRunning = true
-                    if (this.canBattle) {
-                        for (const [key, pet] of this.queueBattles.entries()) {
-                            if (moment() >= pet.battleTime) {
-                                this.isNeedRefreshQueue = true
-                                for (let i = 0; i < pet.timeBattles; i++) {
-                                    console.log(chalk.yellow(`>>>>>>>>>>>>>>>>> Pet ${key} starting battle. Turn ${i + 1} <<<<<<<<<<<<<<<<`))
-                                    const [data, nonce] = await Promise.all([
-                                        this.battleContract.methods.battle(pet.id, configs.monsterLevel).encodeABI(),
-                                        this.web3.eth.getTransactionCount(this.account.address),
-                                    ])
-                                    const trans = {
-                                        nonce,
-                                        gasLimit: configs.gasLimit,
-                                        from: this.account.address,
-                                        to: process.env.BATTLE_CONTRACT,
-                                        value: 0,
-                                        data,
-                                    }
-                                    const signedTrans = await this.account.signTransaction(trans)
-                                    const receipt = await this.web3.eth.sendSignedTransaction(signedTrans.rawTransaction)
-                                    const result: any = this.web3.eth.abi.decodeLog(
-                                        DECODELOG_ABI,
-                                        receipt.logs[1].data,
-                                        [receipt.logs[1].topics[0]],
-                                    )
-
-                                    if (result.result * 1) {
-                                        console.log(chalk.green(`You won the battle, get ${result.reward * 1e-18} reward`))
-                                    } else {
-                                        console.log(chalk.red(`You fucking lost the battle`))
-                                    }
-                                    console.log(chalk.green(`===============================================================================\n`))
-
-                                    await this.sleep(15000)
+                    for (const [key, pet] of this.queueBattles.entries()) {
+                        if (moment() >= pet.battleTime) {
+                            this.isNeedRefreshQueue = true
+                            for (let i = 0; i < pet.timeBattles; i++) {
+                                console.log(chalk.yellow(`>>>>>>>>>>>>>>>>> Pet ${key} starting battle. Turn ${i + 1} <<<<<<<<<<<<<<<<`))
+                                const [data, nonce] = await Promise.all([
+                                    this.battleContract.methods.battle(pet.id, configs.monsterLevel).encodeABI(),
+                                    this.web3.eth.getTransactionCount(this.account.address),
+                                ])
+                                const trans = {
+                                    nonce,
+                                    gasLimit: configs.gasLimit,
+                                    from: this.account.address,
+                                    to: process.env.BATTLE_CONTRACT,
+                                    value: 0,
+                                    data,
                                 }
+                                const signedTrans = await this.account.signTransaction(trans)
+                                const receipt = await this.web3.eth.sendSignedTransaction(signedTrans.rawTransaction)
+                                const result: any = this.web3.eth.abi.decodeLog(
+                                    DECODELOG_ABI,
+                                    receipt.logs[1].data,
+                                    [receipt.logs[1].topics[0]],
+                                )
+
+                                if (result.result * 1) {
+                                    console.log(chalk.green(`You won the battle, get ${result.reward * 1e-18} reward`))
+                                } else {
+                                    console.log(chalk.red(`You fucking lost the battle`))
+                                }
+                                console.log(chalk.green(`===============================================================================\n`))
+
+                                await this.sleep(15000)
                             }
                         }
-                    } else {
-                        console.log(chalk.red(`You can not battle, server is under maintenance`))
                     }
                     if (this.isNeedRefreshQueue) {
                         this.queueBattles = await this.initQueue()
@@ -130,13 +116,12 @@ export class Bot implements OnModuleInit {
             }
         } catch (e) {
             console.log('=====ERROR=====', e.message)
-            this.isAutoRunning = false
             await this.sleep(10000)
             await this.handleBattle()
         }
     }
 
-    @Cron(CronExpression.EVERY_30_MINUTES)
+    // @Cron(CronExpression.EVERY_30_MINUTES)
     async currentReward() {
         try {
             const currentReward = await this.battleContract.methods.getCurrentRewards(this.account.address).call()
@@ -146,7 +131,7 @@ export class Bot implements OnModuleInit {
         }
     }
 
-    @Cron(CronExpression.EVERY_10_MINUTES)
+    // @Cron(CronExpression.EVERY_10_MINUTES)
     async checkBattleTime() {
         try {
             for (const [key, pet] of this.queueBattles.entries()) {
