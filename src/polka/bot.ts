@@ -151,7 +151,7 @@ export class Bot implements OnModuleInit {
                 } as Battle
 
                 console.log(chalk.green(`Pet ${battle.id} already battle not yet`))
-                const duration = moment.duration(battleTime.battleTime.diff(moment()))
+                const duration = moment.duration(battle.battleTime.diff(moment()))
                 console.log(chalk.green(`Time remaining to battle ${duration.hours()}h:${duration.minutes()}m\n`))
 
                 map.set(pet.id, battle)
