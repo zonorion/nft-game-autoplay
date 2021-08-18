@@ -24,14 +24,10 @@ class Character {
 const configs = {
     monsterLevel: 2,
     gasLimit: 3e5,
-    stamina: 9,
+    stamina: 3,
 }
 
 const TARGETS = [
-    {
-        targetId: 1,
-        winRate: 90,
-    },
     {
         targetId: 2,
         winRate: 70,
@@ -40,16 +36,20 @@ const TARGETS = [
         targetId: 3,
         winRate: 50,
     },
+    {
+        targetId: 4,
+        winRate: 30,
+    },
 ]
 
 @Injectable()
-export class DballBot implements OnModuleInit {
+export class P2eBot implements OnModuleInit {
     private web3 = new Web3(process.env.RPC_NODE)
     // private web3 = new Web3(process.env.WSS_NODE)
     private account = this.web3.eth.accounts.privateKeyToAccount(process.env.WALLET_PRIVATE_KEY)
-    private nftContract = new this.web3.eth.Contract(NFT_ABI as AbiItem[], process.env.DBALL_NFT_CONTRACT)
-    private tokenContract = new this.web3.eth.Contract(TOKEN_ABI as AbiItem[], process.env.DBALL_TOKEN_CONTRACT)
-    private gameContract = new this.web3.eth.Contract(GAME_ABI as AbiItem[], process.env.DBALL_GAME_CONTRACT)
+    private nftContract = new this.web3.eth.Contract(NFT_ABI as AbiItem[], process.env.P2E_NFT_CONTRACT)
+    private tokenContract = new this.web3.eth.Contract(TOKEN_ABI as AbiItem[], process.env.P2E_TOKEN_CONTRACT)
+    private gameContract = new this.web3.eth.Contract(GAME_ABI as AbiItem[], process.env.P2E_GAME_CONTRACT)
     private allChars: Character[] = []
     private isNeedRefresh = false
     private canBattle = true
@@ -65,7 +65,7 @@ export class DballBot implements OnModuleInit {
     // )
 
     async onModuleInit(): Promise<any> {
-        log(chalk.bgRedBright(chalk.yellow('===Auto battle DrakeBall start===')))
+        log(chalk.bgRedBright(chalk.yellow('===Auto battle plant2earn start===')))
         this.allChars = await this.fetchAllChars()
 
         await this.handleBattle()
@@ -98,7 +98,7 @@ export class DballBot implements OnModuleInit {
     async currentReward() {
         try {
             const balance = await this.tokenContract.methods.balanceOf(this.account.address).call()
-            console.log(chalk.green(`Current balance available = ${balance * 1e-18} Dball\n`))
+            console.log(chalk.green(`Current balance available = ${balance * 1e-18} P2e\n`))
         } catch (e) {
             console.log(e)
         }
@@ -118,10 +118,10 @@ export class DballBot implements OnModuleInit {
         try {
             const balance = await this.nftContract.methods.balanceOf(this.account.address).call()
             for (let i = 0; i < balance; i++) {
-                const ballId = await this.nftContract.methods.tokenOfOwnerByIndex(this.account.address, i).call()
-                const info = await this.nftContract.methods.getInfo(ballId).call()
+                const planId = await this.nftContract.methods.tokenOfOwnerByIndex(this.account.address, i).call()
+                const info = await this.nftContract.methods.getInfo(planId).call()
                 const char = {
-                    id: parseInt(ballId, 10),
+                    id: parseInt(planId, 10),
                     classId: parseInt(info[3], 10),
                     exp: parseInt(info[1], 10),
                     rare: parseInt(info[0], 10),
@@ -130,6 +130,11 @@ export class DballBot implements OnModuleInit {
                     stamina: parseInt(info[5], 10),
                     price: parseInt(info[6], 10),
                 } as Character
+
+                if (i === 0) {
+                    const tg = await this.gameContract.methods.listTargetOfCharacter(planId).call()
+                    console.log(tg)
+                }
 
                 chars.push(char)
             }
@@ -151,14 +156,14 @@ export class DballBot implements OnModuleInit {
                 nonce,
                 gasLimit: configs.gasLimit,
                 from: this.account.address,
-                to: process.env.DBALL_GAME_CONTRACT,
+                to: process.env.P2E_GAME_CONTRACT,
                 value: 0,
                 data,
             }
             const signedTrans = await this.account.signTransaction(trans)
             const receipt = await this.web3.eth.sendSignedTransaction(signedTrans.rawTransaction)
 
-            const logTrx = receipt.logs.filter((l) => l.topics[0] === '0x04dc576b5ca3464d598c94e3943e0110bfb3a1d6bc7633bfa280527170aba121')
+            const logTrx = receipt.logs.filter((l) => l.topics[0] === '0xd8dd88c99320afdc7ea6baaa655f908349f9143cb3b4768f992ab9f17fb3628b')
 
             const result: any = this.web3.eth.abi.decodeLog(
                 DECODELOG_ABI,

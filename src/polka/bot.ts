@@ -59,19 +59,19 @@ export class Bot implements OnModuleInit {
         this.allPets = await this.fetchAllPets()
         this.queueBattles = await this.initQueue()
 
-        await this.checkBattlefields()
+        // await this.checkBattlefields()
         await this.handleBattle()
         await this.currentReward()
     }
 
-    @Cron(CronExpression.EVERY_10_MINUTES)
-    async checkBattlefields() {
-        try {
-            this.canBattle = await this.managerContract.methods.battlefields(this.account.address).call()
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    // @Cron(CronExpression.EVERY_10_MINUTES)
+    // async checkBattlefields() {
+    //     try {
+    //         this.canBattle = await this.managerContract.methods.battlefields(this.account.address).call()
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 
     @Cron('*/5 * * * *')
     async handleBattle() {
@@ -141,6 +141,9 @@ export class Bot implements OnModuleInit {
         try {
             const currentReward = await this.battleContract.methods.getCurrentRewards(this.account.address).call()
             console.log(chalk.green(`Current reward available = ${currentReward * 1e-18} Pkmon\n`))
+
+            const currentRewardV2 = await this.battleContract.methods.getCurrentRewardsV2(this.account.address).call()
+            console.log(chalk.green(`Current reward v2 available = ${currentRewardV2 * 1e-18} Pkk\n`))
         } catch (e) {
             console.log(e)
         }
