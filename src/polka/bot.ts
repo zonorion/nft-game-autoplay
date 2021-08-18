@@ -59,19 +59,19 @@ export class Bot implements OnModuleInit {
         this.allPets = await this.fetchAllPets()
         this.queueBattles = await this.initQueue()
 
-        await this.checkBattlefields()
+        // await this.checkBattlefields()
         await this.handleBattle()
         await this.currentReward()
     }
 
-    @Cron(CronExpression.EVERY_10_MINUTES)
-    async checkBattlefields() {
-        try {
-            this.canBattle = await this.managerContract.methods.battlefields(this.account.address).call()
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    // @Cron(CronExpression.EVERY_10_MINUTES)
+    // async checkBattlefields() {
+    //     try {
+    //         this.canBattle = await this.managerContract.methods.battlefields(this.account.address).call()
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 
     @Cron('*/5 * * * *')
     async handleBattle() {
