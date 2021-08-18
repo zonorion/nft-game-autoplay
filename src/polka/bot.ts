@@ -141,6 +141,9 @@ export class Bot implements OnModuleInit {
         try {
             const currentReward = await this.battleContract.methods.getCurrentRewards(this.account.address).call()
             console.log(chalk.green(`Current reward available = ${currentReward * 1e-18} Pkmon\n`))
+
+            const currentRewardV2 = await this.battleContract.methods.getCurrentRewardsV2(this.account.address).call()
+            console.log(chalk.green(`Current reward v2 available = ${currentRewardV2 * 1e-18} Pkk\n`))
         } catch (e) {
             console.log(e)
         }

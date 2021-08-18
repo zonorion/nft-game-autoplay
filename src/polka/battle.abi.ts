@@ -390,7 +390,27 @@ export const BATTLE_ABI = [
     },
     {
         inputs: [],
+        name: 'claimRewardV2',
+        outputs: [],
+        stateMutability: 'payable',
+        type: 'function',
+    },
+    {
+        inputs: [],
         name: 'currentTotalReward',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'currentTotalRewardV2',
         outputs: [
             {
                 internalType: 'uint256',
@@ -428,7 +448,45 @@ export const BATTLE_ABI = [
                 type: 'address',
             },
         ],
+        name: 'getCurrentRewardsV2',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '_address',
+                type: 'address',
+            },
+        ],
         name: 'getLastTimeClaim',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '_address',
+                type: 'address',
+            },
+        ],
+        name: 'getLastTimeClaimV2',
         outputs: [
             {
                 internalType: 'uint256',
@@ -567,6 +625,44 @@ export const BATTLE_ABI = [
         type: 'function',
     },
     {
+        inputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        name: 'latestBattle',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '',
+                type: 'address',
+            },
+        ],
+        name: 'latestBlockClaim',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
         inputs: [],
         name: 'manager',
         outputs: [
@@ -598,6 +694,19 @@ export const BATTLE_ABI = [
         outputs: [
             {
                 internalType: 'contract IMonster',
+                name: '',
+                type: 'address',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'monkeyToken',
+        outputs: [
+            {
+                internalType: 'contract IMonkey',
                 name: '',
                 type: 'address',
             },
@@ -691,11 +800,132 @@ export const BATTLE_ABI = [
         inputs: [
             {
                 internalType: 'address',
+                name: '_config',
+                type: 'address',
+            },
+        ],
+        name: 'setMonkey',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
                 name: '_monerNFT',
                 type: 'address',
             },
         ],
         name: 'setNFT',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'uint256',
+                name: 'tokenId',
+                type: 'uint256',
+            },
+            {
+                internalType: 'bool',
+                name: 'value',
+                type: 'bool',
+            },
+        ],
+        name: 'setNftIdBlacklist',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'uint256[]',
+                name: 'tokenIds',
+                type: 'uint256[]',
+            },
+            {
+                internalType: 'bool',
+                name: 'value',
+                type: 'bool',
+            },
+        ],
+        name: 'setNftIdBlacklists',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '_address',
+                type: 'address',
+            },
+            {
+                internalType: 'uint256',
+                name: 'amount',
+                type: 'uint256',
+            },
+        ],
+        name: 'setReward',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '_address',
+                type: 'address',
+            },
+            {
+                internalType: 'uint256',
+                name: 'amount',
+                type: 'uint256',
+            },
+        ],
+        name: 'setRewardV2',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: 'user',
+                type: 'address',
+            },
+            {
+                internalType: 'bool',
+                name: 'value',
+                type: 'bool',
+            },
+        ],
+        name: 'setUserBlacklist',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address[]',
+                name: 'users',
+                type: 'address[]',
+            },
+            {
+                internalType: 'bool',
+                name: 'value',
+                type: 'bool',
+            },
+        ],
+        name: 'setUserBlacklists',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -768,6 +998,19 @@ export const BATTLE_ABI = [
     {
         inputs: [],
         name: 'totalReward',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'totalRewardV2',
         outputs: [
             {
                 internalType: 'uint256',

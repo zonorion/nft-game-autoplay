@@ -65,7 +65,7 @@ export class P2eBot implements OnModuleInit {
     // )
 
     async onModuleInit(): Promise<any> {
-        log(chalk.bgRedBright(chalk.yellow('===Auto battle DrakeBall start===')))
+        log(chalk.bgRedBright(chalk.yellow('===Auto battle plant2earn start===')))
         this.allChars = await this.fetchAllChars()
 
         await this.handleBattle()
