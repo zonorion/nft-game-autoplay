@@ -33,10 +33,10 @@ export class Bot implements OnModuleInit {
     private web3 = new Web3(process.env.RPC_NODE)
     // private web3 = new Web3(process.env.WSS_NODE)
     private account = this.web3.eth.accounts.privateKeyToAccount(process.env.WALLET_PRIVATE_KEY)
-    private monsterContract = new this.web3.eth.Contract(CONTRACT_ABI as AbiItem[], process.env.TOKEN_CONTRACT)
-    private nftContract = new this.web3.eth.Contract(NFT_ABI as AbiItem[], process.env.NFT_CONTRACT)
-    private battleContract = new this.web3.eth.Contract(BATTLE_ABI as AbiItem[], process.env.BATTLE_CONTRACT)
-    private managerContract = new this.web3.eth.Contract(MANAGER_ABI as AbiItem[], process.env.MANAGER_CONTRACT)
+    private monsterContract = new this.web3.eth.Contract(CONTRACT_ABI as AbiItem[], process.env.PKMON_TOKEN_CONTRACT)
+    private nftContract = new this.web3.eth.Contract(NFT_ABI as AbiItem[], process.env.PKMON_NFT_CONTRACT)
+    private battleContract = new this.web3.eth.Contract(BATTLE_ABI as AbiItem[], process.env.PKMON_BATTLE_CONTRACT)
+    private managerContract = new this.web3.eth.Contract(MANAGER_ABI as AbiItem[], process.env.PKMON_MANAGER_CONTRACT)
     private isAutoRunning = false
     private isNeedRefreshQueue = false
     private allPets: Pet[] = []
@@ -93,7 +93,7 @@ export class Bot implements OnModuleInit {
                                         nonce,
                                         gasLimit: configs.gasLimit,
                                         from: this.account.address,
-                                        to: process.env.BATTLE_CONTRACT,
+                                        to: process.env.PKMON_BATTLE_CONTRACT,
                                         value: 0,
                                         data,
                                     }
@@ -140,7 +140,7 @@ export class Bot implements OnModuleInit {
     async currentReward() {
         try {
             const currentReward = await this.battleContract.methods.getCurrentRewards(this.account.address).call()
-            console.log(chalk.green(`Current reward available = ${currentReward * 1e-18} pkmon\n`))
+            console.log(chalk.green(`Current reward available = ${currentReward * 1e-18} Pkmon\n`))
         } catch (e) {
             console.log(e)
         }
@@ -163,10 +163,10 @@ export class Bot implements OnModuleInit {
         // this.web3 = new Web3(process.env.WSS_NODE)
         this.web3 = new Web3(process.env.RPC_NODE)
         this.account = this.web3.eth.accounts.privateKeyToAccount(process.env.WALLET_PRIVATE_KEY)
-        this.monsterContract = new this.web3.eth.Contract(CONTRACT_ABI as AbiItem[], process.env.TOKEN_CONTRACT)
-        this.nftContract = new this.web3.eth.Contract(NFT_ABI as AbiItem[], process.env.NFT_CONTRACT)
-        this.battleContract = new this.web3.eth.Contract(BATTLE_ABI as AbiItem[], process.env.BATTLE_CONTRACT)
-        this.managerContract = new this.web3.eth.Contract(MANAGER_ABI as AbiItem[], process.env.MANAGER_CONTRACT)
+        this.monsterContract = new this.web3.eth.Contract(CONTRACT_ABI as AbiItem[], process.env.PKMON_TOKEN_CONTRACT)
+        this.nftContract = new this.web3.eth.Contract(NFT_ABI as AbiItem[], process.env.PKMON_NFT_CONTRACT)
+        this.battleContract = new this.web3.eth.Contract(BATTLE_ABI as AbiItem[], process.env.PKMON_BATTLE_CONTRACT)
+        this.managerContract = new this.web3.eth.Contract(MANAGER_ABI as AbiItem[], process.env.PKMON_MANAGER_CONTRACT)
     }
 
     async initQueue(): Promise<Map<number, Battle>> {
