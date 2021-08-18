@@ -131,11 +131,6 @@ export class P2eBot implements OnModuleInit {
                     price: parseInt(info[6], 10),
                 } as Character
 
-                if (i === 0) {
-                    const tg = await this.gameContract.methods.listTargetOfCharacter(planId).call()
-                    console.log(tg)
-                }
-
                 chars.push(char)
             }
         } catch (e) {
