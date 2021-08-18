@@ -73,7 +73,7 @@ export class Bot implements OnModuleInit {
         }
     }
 
-    @Cron('*/1 * * * *')
+    @Cron('*/5 * * * *')
     async handleBattle() {
         try {
             if (this.allPets.length > 0) {
