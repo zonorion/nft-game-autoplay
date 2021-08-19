@@ -24,7 +24,7 @@ class Character {
 const configs = {
     monsterLevel: 2,
     gasLimit: 3e5,
-    stamina: 3,
+    stamina: 9,
 }
 
 const TARGETS = [
@@ -79,10 +79,14 @@ export class P2eBot implements OnModuleInit {
                 for (const char of this.allChars) {
                     if (char.stamina >= configs.stamina) {
                         this.isNeedRefresh = true
-                        const target = TARGETS[Math.floor(this.random(1, 3)) - 1]
-                        await this.combat(char.id, target)
+                        const combatTimes = Math.floor(char.stamina / 3)
+                        for (let i = 0; i < combatTimes; i++) {
+                            const target = TARGETS[Math.floor(this.random(1, 3)) - 1]
+                            await this.combat(char.id, target)
+                            await this.sleep(5000)
+                        }
                     } else {
-                        console.log(`Current stamina of ${char.id}: ${char.stamina}`)
+                        console.log(`Current p2e stamina of ${char.id}: ${char.stamina}`)
                     }
                 }
             }
