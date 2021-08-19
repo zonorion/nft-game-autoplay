@@ -106,13 +106,13 @@ export class Bot implements OnModuleInit {
                                     )
 
                                     if (result.result * 1) {
-                                        console.log(chalk.green(`You won the battle, get ${result.reward * 1e-18} reward`))
+                                        console.log(chalk.green(`You won the battle, get ${result.reward} pkk reward`))
                                     } else {
                                         console.log(chalk.red(`You fucking lost the battle`))
                                     }
                                     console.log(chalk.green(`===============================================================================\n`))
 
-                                    await this.sleep(15000)
+                                    await this.sleep(30000)
                                 }
                             }
                         }
@@ -131,7 +131,7 @@ export class Bot implements OnModuleInit {
         } catch (e) {
             console.log('=====ERROR=====', e.message)
             this.isAutoRunning = false
-            await this.sleep(10000)
+            await this.sleep(30000)
             await this.handleBattle()
         }
     }

@@ -23,8 +23,8 @@ class Character {
 
 const configs = {
     monsterLevel: 2,
-    gasLimit: 3e5,
-    stamina: 9,
+    gasLimit: 350000,
+    stamina: 3,
 }
 
 const TARGETS = [
@@ -81,6 +81,8 @@ export class DballBot implements OnModuleInit {
                         this.isNeedRefresh = true
                         const target = TARGETS[Math.floor(this.random(1, 3)) - 1]
                         await this.combat(char.id, target)
+                    } else {
+                        console.log(`Current stamina of ${char.id}: ${char.stamina}`)
                     }
                 }
             }
@@ -167,7 +169,7 @@ export class DballBot implements OnModuleInit {
             )
 
             if (result.isWin) {
-                console.log(chalk.green(`You won the battle, get ${result.ballGain * 1e-18} reward`))
+                console.log(chalk.green(`You won the battle, get ${result.ballGain * 1e-18} dball reward`))
             } else {
                 console.log(chalk.red(`You fucking lost the battle`))
             }

@@ -29,16 +29,16 @@ const configs = {
 
 const TARGETS = [
     {
+        targetId: 1,
+        winRate: 90,
+    },
+    {
         targetId: 2,
         winRate: 70,
     },
     {
         targetId: 3,
         winRate: 50,
-    },
-    {
-        targetId: 4,
-        winRate: 30,
     },
 ]
 
@@ -81,6 +81,8 @@ export class P2eBot implements OnModuleInit {
                         this.isNeedRefresh = true
                         const target = TARGETS[Math.floor(this.random(1, 3)) - 1]
                         await this.combat(char.id, target)
+                    } else {
+                        console.log(`Current stamina of ${char.id}: ${char.stamina}`)
                     }
                 }
             }
@@ -167,7 +169,7 @@ export class P2eBot implements OnModuleInit {
             )
 
             if (result.isWin) {
-                console.log(chalk.green(`You won the battle, get ${result.ballGain * 1e-18} reward`))
+                console.log(chalk.green(`You won the battle, get ${result.ballGain * 1e-18} p2e reward`))
             } else {
                 console.log(chalk.red(`You fucking lost the battle`))
             }
