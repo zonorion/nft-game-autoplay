@@ -25,7 +25,7 @@ class Battle {
 
 const configs = {
     monsterLevel: 2,
-    gasLimit: 3e5,
+    gasLimit: 3.5e5,
 }
 
 @Injectable()
