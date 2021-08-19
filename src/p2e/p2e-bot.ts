@@ -92,7 +92,6 @@ export class P2eBot implements OnModuleInit {
         } catch (e) {
             console.log('=====ERROR=====', e.message)
             await this.fetchAllChars()
-            await this.handleBattle()
         }
     }
 
@@ -175,7 +174,7 @@ export class P2eBot implements OnModuleInit {
             }
             console.log(chalk.green(`===============================================================================\n`))
         } catch (e) {
-            console.log('Combat fail: ', e)
+            console.log('Combat p2e fail: ', e)
             throw e
         }
     }

@@ -92,7 +92,6 @@ export class DballBot implements OnModuleInit {
         } catch (e) {
             console.log('=====ERROR=====', e.message)
             await this.fetchAllChars()
-            await this.handleBattle()
         }
     }
 
