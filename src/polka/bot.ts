@@ -25,7 +25,7 @@ class Battle {
 
 const configs = {
     monsterLevel: 2,
-    gasLimit: 3.5e5,
+    gasLimit: 3e5,
 }
 
 @Injectable()
@@ -131,8 +131,9 @@ export class Bot implements OnModuleInit {
         } catch (e) {
             console.log('=====ERROR=====', e.message)
             this.isAutoRunning = false
-            await this.sleep(30000)
-            await this.handleBattle()
+            this.queueBattles = await this.initQueue()
+            await this.sleep(10000)
+            setTimeout(() => this.handleBattle(), 60000)
         }
     }
 
