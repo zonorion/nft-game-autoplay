@@ -83,36 +83,42 @@ export class Bot implements OnModuleInit {
                         for (const [key, pet] of this.queueBattles.entries()) {
                             if (moment() >= pet.battleTime) {
                                 this.isNeedRefreshQueue = true
-                                for (let i = 0; i < pet.timeBattles; i++) {
-                                    console.log(chalk.yellow(`>>>>>>>>>>>>>>>>> Pet ${key} starting battle. Turn ${i + 1} <<<<<<<<<<<<<<<<`))
-                                    const [data, nonce] = await Promise.all([
-                                        this.battleContract.methods.battle(pet.id, configs.monsterLevel).encodeABI(),
-                                        this.web3.eth.getTransactionCount(this.account.address),
-                                    ])
-                                    const trans = {
-                                        nonce,
-                                        gasLimit: configs.gasLimit,
-                                        from: this.account.address,
-                                        to: process.env.PKMON_BATTLE_CONTRACT,
-                                        value: 0,
-                                        data,
-                                    }
-                                    const signedTrans = await this.account.signTransaction(trans)
-                                    const receipt = await this.web3.eth.sendSignedTransaction(signedTrans.rawTransaction)
-                                    const result: any = this.web3.eth.abi.decodeLog(
-                                        DECODELOG_ABI,
-                                        receipt.logs[1].data,
-                                        [receipt.logs[1].topics[0]],
-                                    )
+                                try {
+                                    for (let i = 0; i < pet.timeBattles; i++) {
+                                        console.log(chalk.yellow(`>>>>>>>>>>>>>>>>> Pet ${key} starting battle. Turn ${i + 1} <<<<<<<<<<<<<<<<`))
+                                        const [data, nonce] = await Promise.all([
+                                            this.battleContract.methods.battle(pet.id, configs.monsterLevel).encodeABI(),
+                                            this.web3.eth.getTransactionCount(this.account.address),
+                                        ])
+                                        const trans = {
+                                            nonce,
+                                            gasLimit: configs.gasLimit,
+                                            from: this.account.address,
+                                            to: process.env.PKMON_BATTLE_CONTRACT,
+                                            value: 0,
+                                            data,
+                                        }
+                                        const signedTrans = await this.account.signTransaction(trans)
+                                        const receipt = await this.web3.eth.sendSignedTransaction(signedTrans.rawTransaction)
+                                        const result: any = this.web3.eth.abi.decodeLog(
+                                            DECODELOG_ABI,
+                                            receipt.logs[1].data,
+                                            [receipt.logs[1].topics[0]],
+                                        )
 
-                                    if (result.result * 1) {
-                                        console.log(chalk.green(`You won the battle, get ${result.reward} pkk reward`))
-                                    } else {
-                                        console.log(chalk.red(`You fucking lost the battle`))
-                                    }
-                                    console.log(chalk.green(`===============================================================================\n`))
+                                        if (result.result * 1) {
+                                            console.log(chalk.green(`You won the battle, get ${result.reward} pkk reward`))
+                                        } else {
+                                            console.log(chalk.red(`You fucking lost the battle`))
+                                        }
+                                        console.log(chalk.green(`===============================================================================\n`))
 
-                                    await this.sleep(30000)
+                                        await this.sleep(20000)
+                                    }
+                                } catch (e) {
+                                    console.log(e)
+                                    this.queueBattles = await this.initQueue()
+                                    await this.sleep(10000)
                                 }
                             }
                         }
