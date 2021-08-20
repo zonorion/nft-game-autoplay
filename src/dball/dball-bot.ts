@@ -36,10 +36,6 @@ const TARGETS = [
         targetId: 3,
         winRate: 50,
     },
-    {
-        targetId: 4,
-        winRate: 30,
-    },
 ]
 
 @Injectable()
