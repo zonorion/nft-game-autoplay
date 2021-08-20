@@ -29,6 +29,10 @@ const configs = {
 
 const TARGETS = [
     {
+        targetId: 1,
+        winRate: 90,
+    },
+    {
         targetId: 2,
         winRate: 70,
     },
