@@ -138,8 +138,6 @@ export class Bot implements OnModuleInit {
             console.log('=====ERROR=====', e.message)
             this.isAutoRunning = false
             this.queueBattles = await this.initQueue()
-            await this.sleep(10000)
-            setTimeout(() => this.handleBattle(), 60000)
         }
     }
 
