@@ -24,7 +24,7 @@ class Battle {
 }
 
 const configs = {
-    monsterLevel: 2,
+    monsterLevels: [2, 3],
     gasLimit: 3e5,
 }
 
@@ -86,8 +86,9 @@ export class Bot implements OnModuleInit {
                                 try {
                                     for (let i = 0; i < pet.timeBattles; i++) {
                                         console.log(chalk.yellow(`>>>>>>>>>>>>>>>>> Pet ${key} starting battle. Turn ${i + 1} <<<<<<<<<<<<<<<<`))
+                                        const target = configs.monsterLevels[Math.floor(this.random(1, 3)) - 1]
                                         const [data, nonce] = await Promise.all([
-                                            this.battleContract.methods.battle(pet.id, configs.monsterLevel).encodeABI(),
+                                            this.battleContract.methods.battle(pet.id, target).encodeABI(),
                                             this.web3.eth.getTransactionCount(this.account.address),
                                         ])
                                         const trans = {
@@ -233,5 +234,9 @@ export class Bot implements OnModuleInit {
 
     sleep(ms) {
         return new Promise((resolve) => setTimeout(resolve, ms))
+    }
+
+    random(mn, mx) {
+        return Math.random() * (mx - mn) + mn
     }
 }
