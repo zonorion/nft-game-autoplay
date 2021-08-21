@@ -83,6 +83,7 @@ export class P2eBot implements OnModuleInit {
                         for (let i = 0; i < combatTimes; i++) {
                             const target = TARGETS[Math.floor(this.random(1, 3)) - 1]
                             await this.combat(char.id, target)
+                            char.stamina -= 3
                             await this.sleep(5000)
                         }
                     } else {
