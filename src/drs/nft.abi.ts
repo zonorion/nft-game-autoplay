@@ -1,5 +1,10 @@
 export const NFT_ABI = [
     {
+        inputs: [],
+        stateMutability: 'nonpayable',
+        type: 'constructor',
+    },
+    {
         anonymous: false,
         inputs: [
             {
@@ -65,82 +70,7 @@ export const NFT_ABI = [
                 type: 'address',
             },
         ],
-        name: 'CancelOrder',
-        type: 'event',
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: 'uint256',
-                name: 'tokenId',
-                type: 'uint256',
-            },
-            {
-                indexed: false,
-                internalType: 'address',
-                name: 'buyer',
-                type: 'address',
-            },
-            {
-                indexed: false,
-                internalType: 'enum PolkaMonsterNFT.Tribe',
-                name: 'tribe',
-                type: 'uint8',
-            },
-            {
-                indexed: false,
-                internalType: 'uint256',
-                name: 'dna',
-                type: 'uint256',
-            },
-            {
-                indexed: false,
-                internalType: 'uint256',
-                name: 'collections',
-                type: 'uint256',
-            },
-        ],
-        name: 'CreateCollections',
-        type: 'event',
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: 'uint256',
-                name: 'tokenId',
-                type: 'uint256',
-            },
-            {
-                indexed: false,
-                internalType: 'uint256',
-                name: 'dna',
-                type: 'uint256',
-            },
-        ],
-        name: 'Evolve',
-        type: 'event',
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: 'uint256',
-                name: 'tokenId',
-                type: 'uint256',
-            },
-            {
-                indexed: false,
-                internalType: 'uint256',
-                name: 'exp',
-                type: 'uint256',
-            },
-        ],
-        name: 'Exp',
+        name: 'ItemCancelled',
         type: 'event',
     },
     {
@@ -158,19 +88,6 @@ export const NFT_ABI = [
                 name: 'seller',
                 type: 'address',
             },
-        ],
-        name: 'FillOrder',
-        type: 'event',
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: 'uint256',
-                name: 'tokenId',
-                type: 'uint256',
-            },
             {
                 indexed: false,
                 internalType: 'address',
@@ -178,7 +95,7 @@ export const NFT_ABI = [
                 type: 'address',
             },
         ],
-        name: 'LayEgg',
+        name: 'ItemFilled',
         type: 'event',
     },
     {
@@ -203,7 +120,7 @@ export const NFT_ABI = [
                 type: 'uint256',
             },
         ],
-        name: 'PlaceOrder',
+        name: 'ItemListed',
         type: 'event',
     },
     {
@@ -211,24 +128,24 @@ export const NFT_ABI = [
         inputs: [
             {
                 indexed: true,
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
+                internalType: 'uint256',
+                name: 'tokenId',
+                type: 'uint256',
             },
             {
-                indexed: true,
-                internalType: 'bytes32',
-                name: 'previousAdminRole',
-                type: 'bytes32',
+                indexed: false,
+                internalType: 'address',
+                name: 'seller',
+                type: 'address',
             },
             {
-                indexed: true,
-                internalType: 'bytes32',
-                name: 'newAdminRole',
-                type: 'bytes32',
+                indexed: false,
+                internalType: 'uint256',
+                name: 'price',
+                type: 'uint256',
             },
         ],
-        name: 'RoleAdminChanged',
+        name: 'ItemUpdated',
         type: 'event',
     },
     {
@@ -236,49 +153,18 @@ export const NFT_ABI = [
         inputs: [
             {
                 indexed: true,
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-            {
-                indexed: true,
                 internalType: 'address',
-                name: 'account',
+                name: 'previousOwner',
                 type: 'address',
             },
             {
                 indexed: true,
                 internalType: 'address',
-                name: 'sender',
+                name: 'newOwner',
                 type: 'address',
             },
         ],
-        name: 'RoleGranted',
-        type: 'event',
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-            {
-                indexed: true,
-                internalType: 'address',
-                name: 'account',
-                type: 'address',
-            },
-            {
-                indexed: true,
-                internalType: 'address',
-                name: 'sender',
-                type: 'address',
-            },
-        ],
-        name: 'RoleRevoked',
+        name: 'OwnershipTransferred',
         type: 'event',
     },
     {
@@ -318,17 +204,11 @@ export const NFT_ABI = [
             {
                 indexed: false,
                 internalType: 'address',
-                name: 'seller',
+                name: 'buyer',
                 type: 'address',
             },
-            {
-                indexed: false,
-                internalType: 'uint256',
-                name: 'newPrice',
-                type: 'uint256',
-            },
         ],
-        name: 'UpdatePrice',
+        name: 'WarriorCreated',
         type: 'event',
     },
     {
@@ -340,79 +220,9 @@ export const NFT_ABI = [
                 name: 'tokenId',
                 type: 'uint256',
             },
-            {
-                indexed: false,
-                internalType: 'enum PolkaMonsterNFT.Tribe',
-                name: 'tribe',
-                type: 'uint8',
-            },
         ],
-        name: 'UpdateTribe',
+        name: 'WarriorDestroyed',
         type: 'event',
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: 'uint256',
-                name: 'tokenId',
-                type: 'uint256',
-            },
-            {
-                indexed: false,
-                internalType: 'uint256',
-                name: 'newGeneration',
-                type: 'uint256',
-            },
-        ],
-        name: 'UpgradeGeneration',
-        type: 'event',
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: 'uint256',
-                name: 'tokenId',
-                type: 'uint256',
-            },
-            {
-                indexed: false,
-                internalType: 'uint256',
-                name: 'time',
-                type: 'uint256',
-            },
-        ],
-        name: 'Working',
-        type: 'event',
-    },
-    {
-        inputs: [],
-        name: 'DEFAULT_ADMIN_ROLE',
-        outputs: [
-            {
-                internalType: 'bytes32',
-                name: '',
-                type: 'bytes32',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: 'MONSTER_ADMIN',
-        outputs: [
-            {
-                internalType: 'bytes32',
-                name: '',
-                type: 'bytes32',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
     },
     {
         inputs: [
@@ -452,158 +262,112 @@ export const NFT_ABI = [
         type: 'function',
     },
     {
-        inputs: [],
-        name: 'baseURI',
-        outputs: [
+        inputs: [
+            {
+                internalType: 'uint256',
+                name: 'tokenId',
+                type: 'uint256',
+            },
+        ],
+        name: 'burn',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: 'to',
+                type: 'address',
+            },
             {
                 internalType: 'string',
-                name: '',
+                name: 'kind',
                 type: 'string',
             },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
             {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
+                internalType: 'string',
+                name: 'name',
+                type: 'string',
             },
-        ],
-        name: 'cancelOrder',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
             {
                 internalType: 'uint256',
-                name: '_tokenId',
+                name: 'hp',
                 type: 'uint256',
             },
             {
-                internalType: 'enum PolkaMonsterNFT.Tribe',
-                name: 'tribe',
-                type: 'uint8',
+                internalType: 'uint256',
+                name: 'attack',
+                type: 'uint256',
             },
-        ],
-        name: 'changeTribe',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
+            {
+                internalType: 'uint256',
+                name: 'defense',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'level',
+                type: 'uint256',
+            },
             {
                 internalType: 'address',
-                name: 'receiver',
+                name: 'signer',
                 type: 'address',
             },
+        ],
+        name: 'createWarrior',
+        outputs: [
             {
-                internalType: 'enum PolkaMonsterNFT.Tribe',
-                name: 'tribe',
-                type: 'uint8',
-            },
-            {
-                internalType: 'uint256',
-                name: '_collections',
-                type: 'uint256',
-            },
-            {
-                internalType: 'uint256',
-                name: '_dna',
-                type: 'uint256',
+                components: [
+                    {
+                        internalType: 'string',
+                        name: 'kind',
+                        type: 'string',
+                    },
+                    {
+                        internalType: 'string',
+                        name: 'name',
+                        type: 'string',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'hp',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'attack',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'defense',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'level',
+                        type: 'uint256',
+                    },
+                ],
+                internalType: 'struct DRS.Warrior',
+                name: '',
+                type: 'tuple',
             },
         ],
-        name: 'createCollections',
-        outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
     },
     {
         inputs: [],
-        name: 'dev',
+        name: 'erc20',
         outputs: [
             {
-                internalType: 'address',
+                internalType: 'contract IERC20',
                 name: '',
                 type: 'address',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
-            {
-                internalType: 'uint256',
-                name: '_dna',
-                type: 'uint256',
-            },
-            {
-                internalType: 'uint256',
-                name: '_generation',
-                type: 'uint256',
-            },
-        ],
-        name: 'evolve',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
-        ],
-        name: 'evolved',
-        outputs: [
-            {
-                internalType: 'bool',
-                name: '',
-                type: 'bool',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
-            {
-                internalType: 'uint256',
-                name: '_exp',
-                type: 'uint256',
-            },
-        ],
-        name: 'exp',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: 'feeEvolve',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
             },
         ],
         stateMutability: 'view',
@@ -649,143 +413,6 @@ export const NFT_ABI = [
                 type: 'uint256',
             },
         ],
-        name: 'getMoner',
-        outputs: [
-            {
-                components: [
-                    {
-                        internalType: 'uint256',
-                        name: 'collections',
-                        type: 'uint256',
-                    },
-                    {
-                        internalType: 'uint256',
-                        name: 'generation',
-                        type: 'uint256',
-                    },
-                    {
-                        internalType: 'enum PolkaMonsterNFT.Tribe',
-                        name: 'tribe',
-                        type: 'uint8',
-                    },
-                    {
-                        internalType: 'uint256',
-                        name: 'exp',
-                        type: 'uint256',
-                    },
-                    {
-                        internalType: 'uint256',
-                        name: 'dna',
-                        type: 'uint256',
-                    },
-                    {
-                        internalType: 'uint256',
-                        name: 'farmTime',
-                        type: 'uint256',
-                    },
-                    {
-                        internalType: 'uint256',
-                        name: 'bornTime',
-                        type: 'uint256',
-                    },
-                ],
-                internalType: 'struct PolkaMonsterNFT.PolkaMonster',
-                name: '',
-                type: 'tuple',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
-        ],
-        name: 'getRare',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-        ],
-        name: 'getRoleAdmin',
-        outputs: [
-            {
-                internalType: 'bytes32',
-                name: '',
-                type: 'bytes32',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-            {
-                internalType: 'uint256',
-                name: 'index',
-                type: 'uint256',
-            },
-        ],
-        name: 'getRoleMember',
-        outputs: [
-            {
-                internalType: 'address',
-                name: '',
-                type: 'address',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-        ],
-        name: 'getRoleMemberCount',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
-        ],
         name: 'getSale',
         outputs: [
             {
@@ -805,8 +432,13 @@ export const NFT_ABI = [
                         name: 'price',
                         type: 'uint256',
                     },
+                    {
+                        internalType: 'uint256',
+                        name: 'timestamp',
+                        type: 'uint256',
+                    },
                 ],
-                internalType: 'struct PolkaMonsterNFT.ItemSale',
+                internalType: 'struct Tradable.TradingItem',
                 name: '',
                 type: 'tuple',
             },
@@ -817,71 +449,52 @@ export const NFT_ABI = [
     {
         inputs: [
             {
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-            {
-                internalType: 'address',
-                name: 'account',
-                type: 'address',
+                internalType: 'uint256',
+                name: '_tokenId',
+                type: 'uint256',
             },
         ],
-        name: 'grantRole',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-            {
-                internalType: 'address',
-                name: 'account',
-                type: 'address',
-            },
-        ],
-        name: 'hasRole',
+        name: 'getWarrior',
         outputs: [
             {
-                internalType: 'bool',
+                components: [
+                    {
+                        internalType: 'string',
+                        name: 'kind',
+                        type: 'string',
+                    },
+                    {
+                        internalType: 'string',
+                        name: 'name',
+                        type: 'string',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'hp',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'attack',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'defense',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'level',
+                        type: 'uint256',
+                    },
+                ],
+                internalType: 'struct DRS.Warrior',
                 name: '',
-                type: 'bool',
+                type: 'tuple',
             },
         ],
         stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'string',
-                name: '_name',
-                type: 'string',
-            },
-            {
-                internalType: 'string',
-                name: '_symbol',
-                type: 'string',
-            },
-            {
-                internalType: 'address',
-                name: '_manager',
-                type: 'address',
-            },
-            {
-                internalType: 'address',
-                name: '_monerERC20',
-                type: 'address',
-            },
-        ],
-        name: 'initialize',
-        outputs: [],
-        stateMutability: 'nonpayable',
         type: 'function',
     },
     {
@@ -909,77 +522,16 @@ export const NFT_ABI = [
         type: 'function',
     },
     {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        name: 'isEvolved',
-        outputs: [
-            {
-                internalType: 'bool',
-                name: '',
-                type: 'bool',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        name: 'latestBlockTransfer',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
         inputs: [],
-        name: 'latestTokenId',
+        name: 'itemERC721',
         outputs: [
             {
-                internalType: 'uint256',
+                internalType: 'contract IERC721',
                 name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'address',
-                name: 'receiver',
                 type: 'address',
             },
-            {
-                internalType: 'enum PolkaMonsterNFT.Tribe[]',
-                name: 'tribes',
-                type: 'uint8[]',
-            },
-            {
-                internalType: 'uint256',
-                name: '_collections',
-                type: 'uint256',
-            },
         ],
-        name: 'layEgg',
-        outputs: [],
-        stateMutability: 'nonpayable',
+        stateMutability: 'view',
         type: 'function',
     },
     {
@@ -987,7 +539,7 @@ export const NFT_ABI = [
         name: 'manager',
         outputs: [
             {
-                internalType: 'contract IManager',
+                internalType: 'contract ManagerInterface',
                 name: '',
                 type: 'address',
             },
@@ -998,38 +550,6 @@ export const NFT_ABI = [
     {
         inputs: [],
         name: 'marketsSize',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: 'monerERC20',
-        outputs: [
-            {
-                internalType: 'contract IERC20',
-                name: '',
-                type: 'address',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
-        ],
-        name: 'monerLevel',
         outputs: [
             {
                 internalType: 'uint256',
@@ -1073,6 +593,19 @@ export const NFT_ABI = [
         type: 'function',
     },
     {
+        inputs: [],
+        name: 'owner',
+        outputs: [
+            {
+                internalType: 'address',
+                name: '',
+                type: 'address',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
         inputs: [
             {
                 internalType: 'uint256',
@@ -1104,100 +637,27 @@ export const NFT_ABI = [
                 type: 'uint256',
             },
         ],
-        name: 'placeOrder',
+        name: 'placeToSell',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
     },
     {
         inputs: [],
-        name: 'priceEgg',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: 'amount',
-                type: 'uint256',
-            },
-        ],
-        name: 'recoverMonster',
+        name: 'renounceOwnership',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
     },
     {
         inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
-        ],
-        name: 'recoverMonsterError',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
             {
                 internalType: 'address',
-                name: '_to',
+                name: 'to',
                 type: 'address',
             },
         ],
-        name: 'recoverMonsterTo',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-            {
-                internalType: 'address',
-                name: 'account',
-                type: 'address',
-            },
-        ],
-        name: 'renounceRole',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-            {
-                internalType: 'address',
-                name: 'account',
-                type: 'address',
-            },
-        ],
-        name: 'revokeRole',
+        name: 'safeMint',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -1267,6 +727,32 @@ export const NFT_ABI = [
             },
         ],
         name: 'setApprovalForAll',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '_item',
+                type: 'address',
+            },
+        ],
+        name: 'setItemContract',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '_manager',
+                type: 'address',
+            },
+        ],
+        name: 'setManager',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -1447,6 +933,19 @@ export const NFT_ABI = [
     {
         inputs: [
             {
+                internalType: 'address',
+                name: 'newOwner',
+                type: 'address',
+            },
+        ],
+        name: 'transferOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
                 internalType: 'uint256',
                 name: '_tokenId',
                 type: 'uint256',
@@ -1461,45 +960,5 @@ export const NFT_ABI = [
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
-            {
-                internalType: 'uint256',
-                name: '_generation',
-                type: 'uint256',
-            },
-        ],
-        name: 'upgradeGeneration',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
-            {
-                internalType: 'uint256',
-                name: '_time',
-                type: 'uint256',
-            },
-        ],
-        name: 'working',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        stateMutability: 'payable',
-        type: 'receive',
     },
 ]

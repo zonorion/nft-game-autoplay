@@ -7,26 +7,26 @@ export const DECODELOG_ABI = [
     },
     {
         indexed: false,
-        internalType: 'enum Battle.MonsterLevel',
-        name: 'monster',
-        type: 'uint8',
-    },
-    {
-        indexed: false,
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-    },
-    {
-        indexed: false,
-        internalType: 'enum Battle.BattleResult',
-        name: 'result',
-        type: 'uint8',
+        internalType: 'uint256',
+        name: 'target',
+        type: 'uint256',
     },
     {
         indexed: false,
         internalType: 'uint256',
-        name: 'reward',
+        name: 'xpGain',
         type: 'uint256',
+    },
+    {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'ballGain',
+        type: 'uint256',
+    },
+    {
+        indexed: false,
+        internalType: 'bool',
+        name: 'isWin',
+        type: 'bool',
     },
 ]

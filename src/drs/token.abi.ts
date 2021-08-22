@@ -1,17 +1,6 @@
-export const CONTRACT_ABI = [
+export const TOKEN_ABI = [
     {
-        inputs: [
-            {
-                internalType: 'string',
-                name: 'name',
-                type: 'string',
-            },
-            {
-                internalType: 'string',
-                name: 'symbol',
-                type: 'string',
-            },
-        ],
+        inputs: [],
         stateMutability: 'nonpayable',
         type: 'constructor',
     },
@@ -85,8 +74,39 @@ export const CONTRACT_ABI = [
         type: 'event',
     },
     {
+        inputs: [
+            {
+                internalType: 'address[]',
+                name: 'to',
+                type: 'address[]',
+            },
+            {
+                internalType: 'uint256[]',
+                name: 'amount',
+                type: 'uint256[]',
+            },
+        ],
+        name: 'addAirdropWhitelist',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '_address',
+                type: 'address',
+            },
+        ],
+        name: 'addBotAddress',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
         inputs: [],
-        name: 'addressForBosses',
+        name: 'addressForMarketing',
         outputs: [
             {
                 internalType: 'address',
@@ -122,19 +142,6 @@ export const CONTRACT_ABI = [
         type: 'function',
     },
     {
-        inputs: [],
-        name: 'amountPlayToEarn',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
         inputs: [
             {
                 internalType: 'uint256',
@@ -142,14 +149,14 @@ export const CONTRACT_ABI = [
                 type: 'uint256',
             },
         ],
-        name: 'antiWhale',
+        name: 'antiBot',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
     },
     {
         inputs: [],
-        name: 'antiWhaleAmount',
+        name: 'antiBotAmount',
         outputs: [
             {
                 internalType: 'uint256',
@@ -162,7 +169,7 @@ export const CONTRACT_ABI = [
     },
     {
         inputs: [],
-        name: 'antiWhaleDuration',
+        name: 'antiBotDuration',
         outputs: [
             {
                 internalType: 'uint256',
@@ -175,7 +182,7 @@ export const CONTRACT_ABI = [
     },
     {
         inputs: [],
-        name: 'antiWhaleEnabled',
+        name: 'antiBotEnabled',
         outputs: [
             {
                 internalType: 'bool',
@@ -188,7 +195,7 @@ export const CONTRACT_ABI = [
     },
     {
         inputs: [],
-        name: 'antiWhaleTime',
+        name: 'antiBotTime',
         outputs: [
             {
                 internalType: 'uint256',
@@ -256,6 +263,24 @@ export const CONTRACT_ABI = [
         type: 'function',
     },
     {
+        inputs: [
+            {
+                internalType: 'address',
+                name: 'account',
+                type: 'address',
+            },
+            {
+                internalType: 'uint256',
+                name: 'amount',
+                type: 'uint256',
+            },
+        ],
+        name: 'burnFrom',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
         inputs: [],
         name: 'buyFeeRate',
         outputs: [
@@ -266,6 +291,13 @@ export const CONTRACT_ABI = [
             },
         ],
         stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'claimAirdrop',
+        outputs: [],
+        stateMutability: 'nonpayable',
         type: 'function',
     },
     {
@@ -309,24 +341,6 @@ export const CONTRACT_ABI = [
         inputs: [
             {
                 internalType: 'address',
-                name: 'recipient',
-                type: 'address',
-            },
-            {
-                internalType: 'uint256',
-                name: 'amount',
-                type: 'uint256',
-            },
-        ],
-        name: 'farm',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'address',
                 name: 'spender',
                 type: 'address',
             },
@@ -362,19 +376,6 @@ export const CONTRACT_ABI = [
     },
     {
         inputs: [],
-        name: 'maxSupply',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
         name: 'name',
         outputs: [
             {
@@ -401,20 +402,25 @@ export const CONTRACT_ABI = [
     },
     {
         inputs: [],
-        name: 'playToEarnReward',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
+        name: 'renounceOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
         type: 'function',
     },
     {
-        inputs: [],
-        name: 'renounceOwnership',
+        inputs: [
+            {
+                internalType: 'address',
+                name: 'recipient',
+                type: 'address',
+            },
+            {
+                internalType: 'uint256',
+                name: 'amount',
+                type: 'uint256',
+            },
+        ],
+        name: 'rewards',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -436,11 +442,24 @@ export const CONTRACT_ABI = [
         inputs: [
             {
                 internalType: 'address',
-                name: '_addressForBosses',
+                name: '_address',
                 type: 'address',
             },
         ],
-        name: 'setAddressForBosses',
+        name: 'setAddressForMarketing',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address[]',
+                name: '_addresses',
+                type: 'address[]',
+            },
+        ],
+        name: 'setBotAddresses',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -462,7 +481,7 @@ export const CONTRACT_ABI = [
         inputs: [
             {
                 internalType: 'uint256',
-                name: '_tokenForBosses',
+                name: '_tokensForMarketing',
                 type: 'uint256',
             },
         ],
@@ -475,16 +494,11 @@ export const CONTRACT_ABI = [
         inputs: [
             {
                 internalType: 'uint256',
-                name: '_sellFeeRate',
-                type: 'uint256',
-            },
-            {
-                internalType: 'uint256',
-                name: '_buyFeeRate',
+                name: '_tokensForAirdrop',
                 type: 'uint256',
             },
         ],
-        name: 'setTransferFeeRate',
+        name: 'setTokensForAirdrop',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -492,19 +506,25 @@ export const CONTRACT_ABI = [
     {
         inputs: [
             {
-                internalType: 'address',
-                name: '_whales',
-                type: 'address',
+                internalType: 'uint256',
+                name: '_tokensForRewards',
+                type: 'uint256',
             },
         ],
-        name: 'setWhales',
+        name: 'setTokensForRewards',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
     },
     {
-        inputs: [],
-        name: 'sweepTokenForBosses',
+        inputs: [
+            {
+                internalType: 'uint256',
+                name: 'amount',
+                type: 'uint256',
+            },
+        ],
+        name: 'sweepTokenForMarketing',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -524,7 +544,33 @@ export const CONTRACT_ABI = [
     },
     {
         inputs: [],
-        name: 'tokenForBosses',
+        name: 'tokensForAirdrop',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'tokensForMarketing',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'tokensForRewards',
         outputs: [
             {
                 internalType: 'uint256',
@@ -638,24 +684,6 @@ export const CONTRACT_ABI = [
             },
         ],
         stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'address',
-                name: 'winner',
-                type: 'address',
-            },
-            {
-                internalType: 'uint256',
-                name: 'reward',
-                type: 'uint256',
-            },
-        ],
-        name: 'win',
-        outputs: [],
-        stateMutability: 'nonpayable',
         type: 'function',
     },
     {

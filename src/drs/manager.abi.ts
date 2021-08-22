@@ -1,5 +1,23 @@
 export const MANAGER_ABI = [
     {
+        inputs: [],
+        stateMutability: 'nonpayable',
+        type: 'constructor',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: 'enum Manager.Status',
+                name: 'status',
+                type: 'uint8',
+            },
+        ],
+        name: 'GameStatusUpdated',
+        type: 'event',
+    },
+    {
         anonymous: false,
         inputs: [
             {
@@ -19,109 +37,34 @@ export const MANAGER_ABI = [
         type: 'event',
     },
     {
-        anonymous: false,
         inputs: [
             {
-                indexed: true,
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-            {
-                indexed: true,
-                internalType: 'bytes32',
-                name: 'previousAdminRole',
-                type: 'bytes32',
-            },
-            {
-                indexed: true,
-                internalType: 'bytes32',
-                name: 'newAdminRole',
-                type: 'bytes32',
-            },
-        ],
-        name: 'RoleAdminChanged',
-        type: 'event',
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-            {
-                indexed: true,
                 internalType: 'address',
-                name: 'account',
+                name: 'to',
                 type: 'address',
             },
             {
-                indexed: true,
-                internalType: 'address',
-                name: 'sender',
-                type: 'address',
+                internalType: 'uint256',
+                name: 'amount',
+                type: 'uint256',
             },
-        ],
-        name: 'RoleGranted',
-        type: 'event',
-    },
-    {
-        anonymous: false,
-        inputs: [
             {
-                indexed: true,
+                internalType: 'string',
+                name: 'nonce',
+                type: 'string',
+            },
+            {
                 internalType: 'bytes32',
-                name: 'role',
+                name: 'hash',
                 type: 'bytes32',
             },
             {
-                indexed: true,
-                internalType: 'address',
-                name: 'account',
-                type: 'address',
-            },
-            {
-                indexed: true,
-                internalType: 'address',
-                name: 'sender',
-                type: 'address',
+                internalType: 'bytes',
+                name: 'signature',
+                type: 'bytes',
             },
         ],
-        name: 'RoleRevoked',
-        type: 'event',
-    },
-    {
-        inputs: [],
-        name: 'DEFAULT_ADMIN_ROLE',
-        outputs: [
-            {
-                internalType: 'bytes32',
-                name: '',
-                type: 'bytes32',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: 'MONSTER_ADMIN',
-        outputs: [
-            {
-                internalType: 'bytes32',
-                name: '',
-                type: 'bytes32',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: '_divPercent',
+        name: 'addRewards',
         outputs: [
             {
                 internalType: 'uint256',
@@ -129,389 +72,18 @@ export const MANAGER_ABI = [
                 type: 'uint256',
             },
         ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: '_feeChangeTribe',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: '_feeEvolve',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: '_feeMarketRate',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: '_feeUpgradeGeneration',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: '_generation',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: '_loseRate',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: '_priceEgg',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: '_timeBattle1',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: '_timeBattle2',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: '_timeBattle3',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: '_timeLimitBattle',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: '_xbattle',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
+        stateMutability: 'nonpayable',
         type: 'function',
     },
     {
         inputs: [
             {
                 internalType: 'address',
-                name: '_address',
+                name: '_supporter',
                 type: 'address',
             },
         ],
-        name: 'battlefields',
-        outputs: [
-            {
-                internalType: 'bool',
-                name: '',
-                type: 'bool',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: 'divPercent',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'address',
-                name: '_address',
-                type: 'address',
-            },
-        ],
-        name: 'evolvers',
-        outputs: [
-            {
-                internalType: 'bool',
-                name: '',
-                type: 'bool',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'address',
-                name: '_address',
-                type: 'address',
-            },
-        ],
-        name: 'farmOwners',
-        outputs: [
-            {
-                internalType: 'bool',
-                name: '',
-                type: 'bool',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: 'feeAddress',
-        outputs: [
-            {
-                internalType: 'address',
-                name: '',
-                type: 'address',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: 'feeChangeTribe',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: 'feeEvolve',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: 'feeMarketRate',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: 'feeUpgradeGeneration',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: 'generation',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-        ],
-        name: 'getRoleAdmin',
-        outputs: [
-            {
-                internalType: 'bytes32',
-                name: '',
-                type: 'bytes32',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-            {
-                internalType: 'uint256',
-                name: 'index',
-                type: 'uint256',
-            },
-        ],
-        name: 'getRoleMember',
-        outputs: [
-            {
-                internalType: 'address',
-                name: '',
-                type: 'address',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-        ],
-        name: 'getRoleMemberCount',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-            {
-                internalType: 'address',
-                name: 'account',
-                type: 'address',
-            },
-        ],
-        name: 'grantRole',
+        name: 'addSupporter',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -519,22 +91,186 @@ export const MANAGER_ABI = [
     {
         inputs: [
             {
+                internalType: 'address[]',
+                name: '_supporters',
+                type: 'address[]',
+            },
+        ],
+        name: 'addSupporters',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'string',
+                name: '_name',
+                type: 'string',
+            },
+            {
+                internalType: 'uint256',
+                name: '_price',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256[]',
+                name: '_levels',
+                type: 'uint256[]',
+            },
+            {
+                internalType: 'uint256[]',
+                name: '_changes',
+                type: 'uint256[]',
+            },
+        ],
+        name: 'addWarriorCard',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'uint256',
+                name: 'amount',
+                type: 'uint256',
+            },
+        ],
+        name: 'claimRewards',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: 'to',
+                type: 'address',
+            },
+            {
+                internalType: 'string',
+                name: 'kind',
+                type: 'string',
+            },
+            {
+                internalType: 'string',
+                name: 'name',
+                type: 'string',
+            },
+            {
+                internalType: 'uint256',
+                name: 'hp',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'attack',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'defense',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'level',
+                type: 'uint256',
+            },
+            {
+                internalType: 'string',
+                name: 'nonce',
+                type: 'string',
+            },
+            {
                 internalType: 'bytes32',
-                name: 'role',
+                name: 'hash',
                 type: 'bytes32',
             },
             {
-                internalType: 'address',
-                name: 'account',
-                type: 'address',
+                internalType: 'bytes',
+                name: 'signature',
+                type: 'bytes',
             },
         ],
-        name: 'hasRole',
+        name: 'claimWarrior',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: 'to',
+                type: 'address',
+            },
+            {
+                internalType: 'uint256',
+                name: 'price',
+                type: 'uint256',
+            },
+            {
+                internalType: 'string',
+                name: 'kind',
+                type: 'string',
+            },
+            {
+                internalType: 'string',
+                name: 'name',
+                type: 'string',
+            },
+            {
+                internalType: 'uint256',
+                name: 'hp',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'attack',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'defense',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'level',
+                type: 'uint256',
+            },
+            {
+                internalType: 'string',
+                name: 'nonce',
+                type: 'string',
+            },
+            {
+                internalType: 'bytes32',
+                name: 'hash',
+                type: 'bytes32',
+            },
+            {
+                internalType: 'bytes',
+                name: 'signature',
+                type: 'bytes',
+            },
+        ],
+        name: 'createWarrior',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'dragonSlayer',
         outputs: [
             {
-                internalType: 'bool',
+                internalType: 'contract IERC20',
                 name: '',
-                type: 'bool',
+                type: 'address',
             },
         ],
         stateMutability: 'view',
@@ -542,14 +278,7 @@ export const MANAGER_ABI = [
     },
     {
         inputs: [],
-        name: 'initialize',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: 'loseRate',
+        name: 'getRewards',
         outputs: [
             {
                 internalType: 'uint256',
@@ -561,14 +290,136 @@ export const MANAGER_ABI = [
         type: 'function',
     },
     {
+        inputs: [],
+        name: 'getStatus',
+        outputs: [
+            {
+                internalType: 'enum Manager.Status',
+                name: '',
+                type: 'uint8',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
         inputs: [
             {
+                internalType: 'string',
+                name: '_name',
+                type: 'string',
+            },
+        ],
+        name: 'getWarriorCard',
+        outputs: [
+            {
+                components: [
+                    {
+                        internalType: 'string',
+                        name: 'name',
+                        type: 'string',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'price',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256[]',
+                        name: 'levels',
+                        type: 'uint256[]',
+                    },
+                    {
+                        internalType: 'uint256[]',
+                        name: 'changes',
+                        type: 'uint256[]',
+                    },
+                    {
+                        internalType: 'bool',
+                        name: 'isValue',
+                        type: 'bool',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'index',
+                        type: 'uint256',
+                    },
+                ],
+                internalType: 'struct Manager.WarriorCard',
+                name: '',
+                type: 'tuple',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'getWarriorCards',
+        outputs: [
+            {
+                internalType: 'string[]',
+                name: '',
+                type: 'string[]',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'marketFee',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'marketFeeAddress',
+        outputs: [
+            {
                 internalType: 'address',
-                name: '_address',
+                name: '',
                 type: 'address',
             },
         ],
-        name: 'markets',
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: 'sender',
+                type: 'address',
+            },
+        ],
+        name: 'onlySpawer',
+        outputs: [
+            {
+                internalType: 'bool',
+                name: '',
+                type: 'bool',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: 'sender',
+                type: 'address',
+            },
+        ],
+        name: 'onlySupporter',
         outputs: [
             {
                 internalType: 'bool',
@@ -593,16 +444,74 @@ export const MANAGER_ABI = [
         type: 'function',
     },
     {
-        inputs: [],
-        name: 'priceEgg',
-        outputs: [
+        inputs: [
             {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
+                internalType: 'bytes32',
+                name: 'hash',
+                type: 'bytes32',
+            },
+            {
+                internalType: 'bytes',
+                name: 'sig',
+                type: 'bytes',
             },
         ],
-        stateMutability: 'view',
+        name: 'recoverSigner',
+        outputs: [
+            {
+                internalType: 'address',
+                name: '',
+                type: 'address',
+            },
+        ],
+        stateMutability: 'pure',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'bytes32',
+                name: 'h',
+                type: 'bytes32',
+            },
+            {
+                internalType: 'uint8',
+                name: 'v',
+                type: 'uint8',
+            },
+            {
+                internalType: 'bytes32',
+                name: 'r',
+                type: 'bytes32',
+            },
+            {
+                internalType: 'bytes32',
+                name: 's',
+                type: 'bytes32',
+            },
+        ],
+        name: 'recoverSigner2',
+        outputs: [
+            {
+                internalType: 'address',
+                name: '',
+                type: 'address',
+            },
+        ],
+        stateMutability: 'pure',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'string',
+                name: '_name',
+                type: 'string',
+            },
+        ],
+        name: 'removeWarriorCards',
+        outputs: [],
+        stateMutability: 'nonpayable',
         type: 'function',
     },
     {
@@ -615,53 +524,12 @@ export const MANAGER_ABI = [
     {
         inputs: [
             {
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-            {
-                internalType: 'address',
-                name: 'account',
-                type: 'address',
+                internalType: 'uint256',
+                name: '_duration',
+                type: 'uint256',
             },
         ],
-        name: 'renounceRole',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'bytes32',
-                name: 'role',
-                type: 'bytes32',
-            },
-            {
-                internalType: 'address',
-                name: 'account',
-                type: 'address',
-            },
-        ],
-        name: 'revokeRole',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'address',
-                name: '_address',
-                type: 'address',
-            },
-            {
-                internalType: 'bool',
-                name: '_value',
-                type: 'bool',
-            },
-        ],
-        name: 'setBattlefields',
+        name: 'setClaimRewardsDuration',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -670,47 +538,11 @@ export const MANAGER_ABI = [
         inputs: [
             {
                 internalType: 'uint256',
-                name: 'value',
+                name: '_fee',
                 type: 'uint256',
             },
         ],
-        name: 'setDivPercent',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'address',
-                name: '_address',
-                type: 'address',
-            },
-            {
-                internalType: 'bool',
-                name: '_value',
-                type: 'bool',
-            },
-        ],
-        name: 'setEvolvers',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'address',
-                name: '_address',
-                type: 'address',
-            },
-            {
-                internalType: 'bool',
-                name: '_value',
-                type: 'bool',
-            },
-        ],
-        name: 'setFarmOwners',
+        name: 'setMarketFee',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -723,85 +555,7 @@ export const MANAGER_ABI = [
                 type: 'address',
             },
         ],
-        name: 'setFeeAddress',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: 'value',
-                type: 'uint256',
-            },
-        ],
-        name: 'setFeeChangeTribe',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: 'value',
-                type: 'uint256',
-            },
-        ],
-        name: 'setFeeEvolve',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: 'value',
-                type: 'uint256',
-            },
-        ],
-        name: 'setFeeMarketRate',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: 'value',
-                type: 'uint256',
-            },
-        ],
-        name: 'setFeeUpgradeGeneration',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: 'value',
-                type: 'uint256',
-            },
-        ],
-        name: 'setGeneration',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: 'value',
-                type: 'uint256',
-            },
-        ],
-        name: 'setLoseRate',
+        name: 'setMarketFeeAddress',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -810,99 +564,11 @@ export const MANAGER_ABI = [
         inputs: [
             {
                 internalType: 'address',
-                name: '_address',
+                name: '_contract',
                 type: 'address',
             },
-            {
-                internalType: 'bool',
-                name: '_value',
-                type: 'bool',
-            },
         ],
-        name: 'setMarkets',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: 'value',
-                type: 'uint256',
-            },
-        ],
-        name: 'setPriceEgg',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: 'value',
-                type: 'uint256',
-            },
-        ],
-        name: 'setTimeBattle1',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: 'value',
-                type: 'uint256',
-            },
-        ],
-        name: 'setTimeBattle2',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: 'value',
-                type: 'uint256',
-            },
-        ],
-        name: 'setTimeBattle3',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: 'value',
-                type: 'uint256',
-            },
-        ],
-        name: 'setTimeLimitBattle',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
-            {
-                internalType: 'bool',
-                name: '_value',
-                type: 'bool',
-            },
-        ],
-        name: 'setTokensLock',
+        name: 'setMasterContract',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -911,16 +577,11 @@ export const MANAGER_ABI = [
         inputs: [
             {
                 internalType: 'address',
-                name: '_address',
+                name: '_contract',
                 type: 'address',
             },
-            {
-                internalType: 'bool',
-                name: '_value',
-                type: 'bool',
-            },
         ],
-        name: 'setUsersLock',
+        name: 'setNFTContract',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -928,65 +589,14 @@ export const MANAGER_ABI = [
     {
         inputs: [
             {
-                internalType: 'uint256',
-                name: 'value',
-                type: 'uint256',
+                internalType: 'enum Manager.Status',
+                name: '_status',
+                type: 'uint8',
             },
         ],
-        name: 'setXBattle',
+        name: 'setStatus',
         outputs: [],
         stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [],
-        name: 'timeLimitBattle',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: 'level',
-                type: 'uint256',
-            },
-        ],
-        name: 'timesBattle',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
-        ],
-        name: 'tokensLock',
-        outputs: [
-            {
-                internalType: 'bool',
-                name: '',
-                type: 'bool',
-            },
-        ],
-        stateMutability: 'view',
         type: 'function',
     },
     {
@@ -1005,12 +615,22 @@ export const MANAGER_ABI = [
     {
         inputs: [
             {
+                internalType: 'bytes32',
+                name: 'hash',
+                type: 'bytes32',
+            },
+            {
+                internalType: 'bytes',
+                name: 'signature',
+                type: 'bytes',
+            },
+            {
                 internalType: 'address',
-                name: '_address',
+                name: 'signer',
                 type: 'address',
             },
         ],
-        name: 'usersLock',
+        name: 'verifySignature',
         outputs: [
             {
                 internalType: 'bool',
@@ -1018,20 +638,11 @@ export const MANAGER_ABI = [
                 type: 'bool',
             },
         ],
-        stateMutability: 'view',
+        stateMutability: 'pure',
         type: 'function',
     },
     {
-        inputs: [],
-        name: 'xBattle',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
+        stateMutability: 'payable',
+        type: 'receive',
     },
 ]
