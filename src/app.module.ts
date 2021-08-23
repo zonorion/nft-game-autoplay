@@ -16,7 +16,7 @@ import { DrsBot } from './drs/drs-bot'
     controllers: [],
     providers: [
         // Bot,
-        // DballBot,
+        DballBot,
         P2eBot,
         DrsBot,
     ],

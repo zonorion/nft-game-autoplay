@@ -149,7 +149,7 @@ export class DballBot implements OnModuleInit {
         try {
             console.log(chalk.green(`Char ${id} starting battle with win rate ${rate.winRate}%`))
             const [data, nonce] = await Promise.all([
-                this.gameContract.methods.combat(id, rate.targetId).encodeABI(),
+                this.gameContract.methods.combat(id, [], rate.targetId).encodeABI(),
                 this.web3.eth.getTransactionCount(this.account.address),
             ])
             const trans = {
