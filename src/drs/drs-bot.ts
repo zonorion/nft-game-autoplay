@@ -99,7 +99,7 @@ export class DrsBot implements OnModuleInit {
                 }
             }
         } catch (e) {
-            console.log('=====ERROR=====', e.message)
+            console.log('=====ERROR=====', e)
         }
     }
 
