@@ -65,13 +65,7 @@ export const MANAGER_ABI = [
             },
         ],
         name: 'addRewards',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
+        outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
     },
@@ -150,64 +144,6 @@ export const MANAGER_ABI = [
                 type: 'address',
             },
             {
-                internalType: 'string',
-                name: 'kind',
-                type: 'string',
-            },
-            {
-                internalType: 'string',
-                name: 'name',
-                type: 'string',
-            },
-            {
-                internalType: 'uint256',
-                name: 'hp',
-                type: 'uint256',
-            },
-            {
-                internalType: 'uint256',
-                name: 'attack',
-                type: 'uint256',
-            },
-            {
-                internalType: 'uint256',
-                name: 'defense',
-                type: 'uint256',
-            },
-            {
-                internalType: 'uint256',
-                name: 'level',
-                type: 'uint256',
-            },
-            {
-                internalType: 'string',
-                name: 'nonce',
-                type: 'string',
-            },
-            {
-                internalType: 'bytes32',
-                name: 'hash',
-                type: 'bytes32',
-            },
-            {
-                internalType: 'bytes',
-                name: 'signature',
-                type: 'bytes',
-            },
-        ],
-        name: 'claimWarrior',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'address',
-                name: 'to',
-                type: 'address',
-            },
-            {
                 internalType: 'uint256',
                 name: 'price',
                 type: 'uint256',
@@ -271,6 +207,32 @@ export const MANAGER_ABI = [
                 internalType: 'contract IERC20',
                 name: '',
                 type: 'address',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'getClaimRewardsDuration',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'getLastClaimRewardsTime',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
             },
         ],
         stateMutability: 'view',
@@ -524,9 +486,9 @@ export const MANAGER_ABI = [
     {
         inputs: [
             {
-                internalType: 'uint256',
+                internalType: 'uint48',
                 name: '_duration',
-                type: 'uint256',
+                type: 'uint48',
             },
         ],
         name: 'setClaimRewardsDuration',
