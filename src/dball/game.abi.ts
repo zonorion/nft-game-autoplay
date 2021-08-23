@@ -160,6 +160,11 @@ export const GAME_ABI = [
                 type: 'uint256',
             },
             {
+                internalType: 'uint256[]',
+                name: '_itemIds',
+                type: 'uint256[]',
+            },
+            {
                 internalType: 'uint256',
                 name: '_winrate',
                 type: 'uint256',
@@ -251,22 +256,6 @@ export const GAME_ABI = [
     {
         inputs: [
             {
-                internalType: 'address',
-                name: '_characters',
-                type: 'address',
-            },
-            {
-                internalType: 'address',
-                name: '_maincoin',
-                type: 'address',
-            },
-        ],
-        stateMutability: 'nonpayable',
-        type: 'constructor',
-    },
-    {
-        inputs: [
-            {
                 internalType: 'uint256',
                 name: '_tokenId',
                 type: 'uint256',
@@ -343,6 +332,11 @@ export const GAME_ABI = [
             {
                 internalType: 'address',
                 name: '_characters',
+                type: 'address',
+            },
+            {
+                internalType: 'address',
+                name: '_itemGamePlay',
                 type: 'address',
             },
             {
@@ -509,32 +503,34 @@ export const GAME_ABI = [
         type: 'function',
     },
     {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '_characters',
+                type: 'address',
+            },
+            {
+                internalType: 'address',
+                name: '_itemGamePlay',
+                type: 'address',
+            },
+            {
+                internalType: 'address',
+                name: '_maincoin',
+                type: 'address',
+            },
+        ],
+        stateMutability: 'nonpayable',
+        type: 'constructor',
+    },
+    {
         inputs: [],
         name: 'characters',
         outputs: [
             {
-                internalType: 'contract Characters',
+                internalType: 'contract ICharacters',
                 name: '',
                 type: 'address',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
-        ],
-        name: 'checkBannedCharracter',
-        outputs: [
-            {
-                internalType: 'bool',
-                name: '',
-                type: 'bool',
             },
         ],
         stateMutability: 'view',
@@ -579,63 +575,8 @@ export const GAME_ABI = [
         type: 'function',
     },
     {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
-        ],
-        name: 'getInfo',
-        outputs: [
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-            {
-                internalType: 'bool',
-                name: '',
-                type: 'bool',
-            },
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-            {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256',
-            },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-    },
-    {
-        inputs: [
-            {
-                internalType: 'uint256',
-                name: '_tokenId',
-                type: 'uint256',
-            },
-        ],
-        name: 'getStamina',
+        inputs: [],
+        name: 'hatchFee',
         outputs: [
             {
                 internalType: 'uint256',
@@ -648,12 +589,12 @@ export const GAME_ABI = [
     },
     {
         inputs: [],
-        name: 'hatchFee',
+        name: 'itemGamePlay',
         outputs: [
             {
-                internalType: 'uint256',
+                internalType: 'contract IItemGamePlay',
                 name: '',
-                type: 'uint256',
+                type: 'address',
             },
         ],
         stateMutability: 'view',
@@ -715,7 +656,7 @@ export const GAME_ABI = [
         name: 'maincoin',
         outputs: [
             {
-                internalType: 'contract Maincoin',
+                internalType: 'contract IMaincoin',
                 name: '',
                 type: 'address',
             },

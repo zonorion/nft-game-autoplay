@@ -50,10 +50,7 @@ export class DrsBot implements OnModuleInit {
         // this.allChars = await this.fetchAllChars()
 
         // await this.handleBattle()
-        // await this.currentReward()
-
-        // const rewards = await this.managerContract.methods.getRewards().call()
-        // console.log(rewards)
+        await this.currentReward()
     }
 
     @Cron('*/10 * * * *')
@@ -82,7 +79,6 @@ export class DrsBot implements OnModuleInit {
                                 ).encodeABI(),
                                 this.web3.eth.getTransactionCount(this.account.address),
                             ])
-                            console.log('TRX: ', trxData)
                             const trans = {
                                 nonce,
                                 gasLimit: configs.gasLimit,
@@ -92,9 +88,8 @@ export class DrsBot implements OnModuleInit {
                                 data: trxData,
                             }
                             const signedTrans = await this.account.signTransaction(trans)
-                            console.log('signedTrans', signedTrans)
                             const receipt = await this.web3.eth.sendSignedTransaction(signedTrans.rawTransaction)
-                            console.log(receipt)
+                            console.log(chalk.green(`Kill dragon successfully - ${receipt.transactionHash}\n`))
                         } catch (err) {
                             console.log(err)
                         }
@@ -108,10 +103,11 @@ export class DrsBot implements OnModuleInit {
         }
     }
 
-    // @Cron(CronExpression.EVERY_30_MINUTES)
+    @Cron(CronExpression.EVERY_30_MINUTES)
     async currentReward() {
         try {
-            console.log(1)
+            const rewards = await this.managerContract.methods.getRewards().call({ from: this.account.address })
+            console.log(chalk.green(`DRS current reward available = ${rewards * 1e-9} DRS\n`))
         } catch (e) {
             console.log(e)
         }
