@@ -6,8 +6,7 @@ import { Cron, CronExpression } from '@nestjs/schedule'
 import { NFT_ABI } from './nft.abi'
 import { TOKEN_ABI } from './token.abi'
 import { MANAGER_ABI } from './manager.abi'
-var http = require('http')
-var url = require('url')
+import moment from 'moment'
 
 const { log } = console
 
@@ -51,15 +50,33 @@ export class DrsBot implements OnModuleInit {
     log(chalk.bgRedBright(chalk.yellow('===Auto battle dragon slayer start===')))
     // this.allChars = await this.fetchAllChars()
 
+    // await this.getTimeBattle()
     await this.handleBattle()
     await this.currentReward()
   }
 
-  @Cron('*/10 * * * *')
+  async getTimeBattle() {
+    try {
+      const response = await this.httpService.get(URL_TIME).toPromise()
+      if (response && response.data) {
+        for (const [key, value] of Object.entries(response.data.stats)) {
+          this.mapTimeBattle.set(+key, Math.round(Date.now() / 1000) + +value)
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  @Cron('*/5 * * * *')
   async handleBattle() {
     try {
+      await this.getTimeBattle()
       for (const warriorId of configs.warriorIds) {
-        const response = await this.httpService
+        const timeBattle = this.mapTimeBattle.get(warriorId)
+        const now = Math.round(Date.now() / 1000)
+        if (now >= timeBattle) {
+          const response = await this.httpService
           .post(
             URL,
             {
@@ -106,6 +123,10 @@ export class DrsBot implements OnModuleInit {
           } else {
             console.log(chalk.red(`Dragon slayer: Waiting for new turn`))
           }
+        }
+        } else {
+            const duration = moment.duration(moment(timeBattle * 1e3).diff(now * 1e3))
+            console.log(chalk.green(`Drs battle time remaining ${Math.round(duration.asMinutes())}m at ${moment(timeBattle * 1e3).format('HH:mm:ss')} \n`))
         }
       }
     } catch (e) {
