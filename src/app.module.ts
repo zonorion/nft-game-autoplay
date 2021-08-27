@@ -5,6 +5,7 @@ import { Bot } from './polka/bot'
 import { DballBot } from './dball/dball-bot'
 import { P2eBot } from './p2e/p2e-bot'
 import { DrsBot } from './drs/drs-bot'
+import { TokenHolder } from './holder/token-holder'
 
 @Module({
     imports: [
@@ -16,9 +17,10 @@ import { DrsBot } from './drs/drs-bot'
     controllers: [],
     providers: [
         // Bot,
-        DballBot,
-        P2eBot,
+        // DballBot,
+        // P2eBot,
         DrsBot,
+        // TokenHolder,
     ],
 })
 export class AppModule {

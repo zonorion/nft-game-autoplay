@@ -24,7 +24,7 @@ class Character {
 const configs = {
     monsterLevel: 2,
     gasLimit: 3e5,
-    stamina: 9,
+    stamina: 6,
 }
 
 const TARGETS = [
@@ -149,7 +149,7 @@ export class P2eBot implements OnModuleInit {
         try {
             console.log(chalk.green(`Char ${id} starting battle with win rate ${rate.winRate}%`))
             const [data, nonce] = await Promise.all([
-                this.gameContract.methods.combat(id, rate.targetId).encodeABI(),
+                this.gameContract.methods.combat(id, [], rate.targetId).encodeABI(),
                 this.web3.eth.getTransactionCount(this.account.address),
             ])
             const trans = {
@@ -163,7 +163,7 @@ export class P2eBot implements OnModuleInit {
             const signedTrans = await this.account.signTransaction(trans)
             const receipt = await this.web3.eth.sendSignedTransaction(signedTrans.rawTransaction)
 
-            const logTrx = receipt.logs.filter((l) => l.topics[0] === '0xd8dd88c99320afdc7ea6baaa655f908349f9143cb3b4768f992ab9f17fb3628b')
+            const logTrx = receipt.logs.filter((l) => l.topics[0] === '0x04dc576b5ca3464d598c94e3943e0110bfb3a1d6bc7633bfa280527170aba121')
 
             const result: any = this.web3.eth.abi.decodeLog(
                 DECODELOG_ABI,

@@ -23,7 +23,7 @@ class Character {
 
 const configs = {
     monsterLevel: 2,
-    gasLimit: 3.5e5,
+    gasLimit: 4e5,
     stamina: 9,
 }
 
