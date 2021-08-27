@@ -77,56 +77,63 @@ export class DrsBot implements OnModuleInit {
         const now = Math.round(Date.now() / 1000)
         if (now >= timeBattle) {
           const response = await this.httpService
-          .post(
-            URL,
-            {
-              address: this.account.address,
-              monsterId: configs.monsterIds[0],
-              warriorId,
-              warriorLevel: configs.warriorLevel,
-            },
-            { headers: { Cookie: process.env.DRS_COOKIES } },
-          )
-          .toPromise()
-        console.log(response.data)
-        if (response && response.status === 200) {
-          const { data } = response
-          // console.log(data)
-          if (data.success && data.result === 'WIN') {
-            try {
-              const [trxData, nonce] = await Promise.all([
-                this.managerContract.methods
-                  .addRewards(
-                    this.account.address,
-                    data.rewards,
-                    data.signature.nonce,
-                    data.signature.hash,
-                    data.signature.signature,
-                  )
-                  .encodeABI(),
-                this.web3.eth.getTransactionCount(this.account.address),
-              ])
-              const trans = {
-                nonce,
-                gasLimit: configs.gasLimit,
-                from: this.account.address,
-                to: process.env.DRS_MANAGER_CONTRACT,
-                value: 0,
-                data: trxData,
+            .post(
+              URL,
+              {
+                address: this.account.address,
+                monsterId: configs.monsterIds[0],
+                warriorId,
+                warriorLevel: configs.warriorLevel,
+              },
+              { headers: { Cookie: process.env.DRS_COOKIES } },
+            )
+            .toPromise()
+          console.log(response.data)
+          if (response && response.status === 200) {
+            const { data } = response
+            // console.log(data)
+            if (data.success && data.result === 'WIN') {
+              try {
+                const [trxData, nonce] = await Promise.all([
+                  this.managerContract.methods
+                    .addRewards(
+                      this.account.address,
+                      data.rewards,
+                      data.signature.nonce,
+                      data.signature.hash,
+                      data.signature.signature,
+                    )
+                    .encodeABI(),
+                  this.web3.eth.getTransactionCount(this.account.address),
+                ])
+                const trans = {
+                  nonce,
+                  gasLimit: configs.gasLimit,
+                  from: this.account.address,
+                  to: process.env.DRS_MANAGER_CONTRACT,
+                  value: 0,
+                  data: trxData,
+                }
+                const signedTrans = await this.account.signTransaction(trans)
+                const receipt = await this.web3.eth.sendSignedTransaction(signedTrans.rawTransaction)
+                console.log(chalk.green(`Kill dragon successfully - ${receipt.transactionHash}\n`))
+              } catch (err) {
+                console.log(err)
               }
-              const signedTrans = await this.account.signTransaction(trans)
-              const receipt = await this.web3.eth.sendSignedTransaction(signedTrans.rawTransaction)
-              console.log(chalk.green(`Kill dragon successfully - ${receipt.transactionHash}\n`))
-            } catch (err) {
-              console.log(err)
+            } else {
+              console.log(chalk.red(`Dragon slayer: Waiting for new turn`))
             }
-          } else {
-            console.log(chalk.red(`Dragon slayer: Waiting for new turn`))
           }
-        }
+          await this.sleep(30000)
         } else {
-            const duration = moment.duration(moment(timeBattle * 1e3).diff(now * 1e3))
-            console.log(chalk.green(`Drs battle time remaining ${Math.round(duration.asMinutes())}m at ${moment(timeBattle * 1e3).format('HH:mm:ss')} \n`))
+          const duration = moment.duration(moment(timeBattle * 1e3).diff(now * 1e3))
+          console.log(
+            chalk.green(
+              `Drs battle time remaining ${Math.round(duration.asMinutes())}m at ${moment(timeBattle * 1e3).format(
+                'HH:mm:ss',
+              )} \n`,
+            ),
+          )
         }
       }
     } catch (e) {
