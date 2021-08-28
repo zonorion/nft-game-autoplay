@@ -7,16 +7,36 @@ import { NFT_ABI } from './nft.abi'
 import { TOKEN_ABI } from './token.abi'
 import { MANAGER_ABI } from './manager.abi'
 import moment from 'moment'
+import { time } from 'cron'
 
 const { log } = console
 
 const URL = 'https://play.dragonslayer.games/api/signature/fight'
-const URL_TIME = 'https://play.dragonslayer.games/api/stats?warriors[]=3281&warriors[]=3290'
+const URL_TIME = 'https://play.dragonslayer.games/api/stats?warriors[]=3281&warriors[]=3290&warriors[]=28126&warriors[]=28141'
 
 const configs = {
-  monsterIds: ['blackz'],
-  warriorIds: [3281, 3290],
-  warriorLevel: 5,
+  warriors: [
+    {
+      id: 3281,
+      monster: 'blackz',
+      level: 5,
+    },
+    {
+      id: 3290,
+      monster: 'blackz',
+      level: 5,
+    },
+    {
+      id: 28126,
+      monster: 'topaz',
+      level: 3,
+    },
+    {
+      id: 28141,
+      monster: 'topaz',
+      level: 3,
+    }
+  ],
   gasLimit: 3e5,
 }
 
@@ -72,8 +92,8 @@ export class DrsBot implements OnModuleInit {
   async handleBattle() {
     try {
       await this.getTimeBattle()
-      for (const warriorId of configs.warriorIds) {
-        const timeBattle = this.mapTimeBattle.get(warriorId)
+      for (const warrior of configs.warriors) {
+        const timeBattle = this.mapTimeBattle.get(warrior.id)
         const now = Math.round(Date.now() / 1000)
         if (now >= timeBattle) {
           const response = await this.httpService
@@ -81,9 +101,9 @@ export class DrsBot implements OnModuleInit {
               URL,
               {
                 address: this.account.address,
-                monsterId: configs.monsterIds[0],
-                warriorId,
-                warriorLevel: configs.warriorLevel,
+                monsterId: warrior.monster,
+                warriorId: warrior.id,
+                warriorLevel: warrior.level,
               },
               { headers: { Cookie: process.env.DRS_COOKIES } },
             )
@@ -129,7 +149,7 @@ export class DrsBot implements OnModuleInit {
           const duration = moment.duration(moment(timeBattle * 1e3).diff(now * 1e3))
           console.log(
             chalk.green(
-              `Drs battle time remaining ${Math.round(duration.asMinutes())}m at ${moment(timeBattle * 1e3).format(
+              `Drs id ${warrior.id} battle time remaining ${Math.round(duration.asMinutes())}m at ${moment(timeBattle * 1e3).format(
                 'HH:mm:ss',
               )} \n`,
             ),
