@@ -12,7 +12,7 @@ import { time } from 'cron'
 const { log } = console
 
 const URL = 'https://play.dragonslayer.games/api/signature/fight'
-const URL_TIME = 'https://play.dragonslayer.games/api/stats?warriors[]=3281&warriors[]=3290&warriors[]=28126&warriors[]=28141'
+const URL_TIME = 'https://play.dragonslayer.games/api/stats?warriors[]=3281&warriors[]=3290&warriors[]=28126&warriors[]=28141&warriors[]=41351'
 
 const configs = {
   warriors: [
@@ -35,6 +35,11 @@ const configs = {
       id: 28141,
       monster: 'topaz',
       level: 3,
+    },
+    {
+      id: 41351,
+      monster: 'blackz',
+      level: 4,
     }
   ],
   gasLimit: 3e5,
@@ -144,7 +149,6 @@ export class DrsBot implements OnModuleInit {
               console.log(chalk.red(`Dragon slayer: Waiting for new turn`))
             }
           }
-          await this.sleep(30000)
         } else {
           const duration = moment.duration(moment(timeBattle * 1e3).diff(now * 1e3))
           console.log(
@@ -165,7 +169,7 @@ export class DrsBot implements OnModuleInit {
   async currentReward() {
     try {
       const rewards = await this.managerContract.methods.getRewards().call({ from: this.account.address })
-      console.log(chalk.green(`DRS current reward available = ${rewards * 1e-9} DRS\n`))
+      console.log(chalk.green(`DRS current reward available = ${Math.round(rewards * 1e-9)} DRS\n`))
     } catch (e) {
       console.log(e)
     }

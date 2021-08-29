@@ -16,7 +16,7 @@ import { TokenHolder } from './holder/token-holder'
     ],
     controllers: [],
     providers: [
-        // Bot,
+        Bot,
         // DballBot,
         // P2eBot,
         DrsBot,
