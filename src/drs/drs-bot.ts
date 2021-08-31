@@ -28,17 +28,17 @@ const configs = {
     },
     {
       id: 28126,
-      monster: 'topaz',
+      monster: 'thornado',
       level: 3,
     },
     {
       id: 28141,
-      monster: 'topaz',
+      monster: 'thornado',
       level: 3,
     },
     {
       id: 41351,
-      monster: 'blackz',
+      monster: 'topaz',
       level: 4,
     }
   ],

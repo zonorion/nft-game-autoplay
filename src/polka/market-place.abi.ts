@@ -1,4 +1,4 @@
-export const NFT_ABI = [
+export const MARKET_PLACE_ABI = [
   {
     anonymous: false,
     inputs: [
